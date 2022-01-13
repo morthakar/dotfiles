@@ -13,12 +13,6 @@ export PATH=$PATH:/usr/local/go/bin
 # You may need to manually set your language environment
 export LANG=pt_BR.UTF-8
 
-# Fzf env var
-FD_OPTIONS="--follow --exclude .git --exclude node_modules"
-export FZF_DEFAULT_COMMAND="fd --type f --type l $FD_OPTIONS" 
-export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS" 
-export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
-
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
@@ -99,10 +93,14 @@ ex ()
  }
 
 
+# Modified version where you can press
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
 # Fzf and cd dir
 f() {
   local dir
-  dir=$(fd ${1} -H . ~  | fzf +m) 
+  dir=$(fd ${1} -H | fzf +m)
   if [[ -d "$dir" ]] ; then
       cd "$dir"
   else
@@ -110,14 +108,22 @@ f() {
   fi
 }
 
-# Modified version where you can press
-#   - CTRL-E or Enter key to open with the $EDITOR
+fa() {
+  local dir
+  dir=$(fd ${1} -H . /  | fzf +m)
+  if [[ -d "$dir" ]] ; then
+      cd "$dir"
+  else
+      cd $(dirname "$dir")
+  fi
+}
+
 fo() {
-  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-e)")
+  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0)")
   key=$(head -1 <<< "$out")
   file=$(head -2 <<< "$out" | tail -1)
   if [ -n "$file" ]; then
-    [ "$key" = ctrl-e ] &&  ${EDITOR:-vim} "$file"
+      ${EDITOR:-vim} "$file"
   fi
 }
 
