@@ -1,0 +1,34 @@
+# Developement
+## IDE
+- Nvim
+- Vim-Plug
+## Langs
+- Rust
+- Go
+- Python
+- Lua
+
+# System
+- xorg
+- leftwm
+- polybar
+- yay
+- paru
+- topgrade
+- alacritty
+- starship
+- zsh
+- oh-my-zsh
+- pcmanfm
+- feh
+- nitrogen
+- picom
+- tmux
+- lightdm
+- brave
+- calibre
+- galculator
+- popcorn-time
+- pulse
+- volumeicon?
+

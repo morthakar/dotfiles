@@ -1,0 +1,53 @@
+#!/bin/bash
+export SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+
+#down the last running theme
+if [ -f "/tmp/leftwm-theme-down" ]; then
+    /tmp/leftwm-theme-down
+    rm /tmp/leftwm-theme-down
+fi
+ln -s $SCRIPTPATH/down /tmp/leftwm-theme-down
+
+
+#start picom or compton if it exists
+if [ -x "$(command -v picom)" ]; then
+  picom &> /dev/null & 
+elif [ -x "$(command -v compton)" ]; then
+  compton &> /dev/null & 
+fi
+
+#set the theme.toml config
+echo "LoadTheme $SCRIPTPATH/theme.toml" > $XDG_RUNTIME_DIR/leftwm/commands.pipe
+
+
+#set background
+if [ -x "$(command -v feh)" ]; then
+  feh --bg-scale "${SCRIPTPATH}/background.jpg"
+fi
+
+#make sure all fonts needed are installed
+#${SCRIPTPATH}/fonts/install_fonts
+
+# extra utils to make this theme a little more homey
+if [ -x "$(command -v dunst)" ]; then
+  dunst &
+fi
+
+if [ -x "$(command -v polybar)" ]; then
+  pkill polybar
+  monitors="$(polybar -m | sed s/:.*// | tac)"
+  export index=0
+  while read -r display; do
+    MONITOR=$display polybar -c "$SCRIPTPATH/polybar/polybar.config" main &> /dev/null &
+    index=$((index+1))
+  done <<< "$monitors"
+  exit 0
+fi
+
+#polybar -m | sed s/:.*// | tac | while read -r monitor
+#do
+#  monitor=$monitor polybar -c "$SCRIPTPATH/polybar/polybar.config" main &> /dev/null &
+#done
+
+

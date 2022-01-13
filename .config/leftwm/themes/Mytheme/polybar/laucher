@@ -1,0 +1,21 @@
+#! /bin/zsh
+
+export POLYBARPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+
+is_installed(){
+    if [ -x polybar -m ]; then
+       true
+   else
+       false
+    fi
+}
+
+main(){
+    monitors=("${(@f)$(polybar -m)}")
+    for i ("$monitors")
+        printf "$i\n"
+}           
+
+main
+
