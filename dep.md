@@ -9,26 +9,57 @@
 - Lua
 
 # System
+## Audio
+- ALSA
+- pulse
+
+## Version control systems
+- git
+
+## Authentication agents
+- Polkit
+
+## Browser
+- brave
+
+## Compositor
+- picom
+
+## Display Server
 - xorg
-- leftwm
-- polybar
+
+## File Manager
+- pcmanfm
+
+## Image Viwer
+- feh
+- nitrogen
+
+## Login Manager
+- lightdm
+- lightdm-gtk-greeter
+
+## Package Manager
 - yay
 - paru
 - topgrade
+
+## Network
+- Networkmanager
+
+## Terminal
 - alacritty
 - starship
 - zsh
 - oh-my-zsh
-- pcmanfm
-- feh
-- nitrogen
-- picom
 - tmux
-- lightdm
-- brave
+
+## Util
 - calibre
 - galculator
 - popcorn-time
-- pulse
-- volumeicon?
+- fzf
 
+## Window Manager
+- leftwm
+- polybar
