@@ -20,7 +20,6 @@ Plug 'nvim-treesitter/playground'
 
 " Langs
 Plug 'rust-lang/rust.vim'
-" Plug 'simrat39/rust-tools.nvim'
 Plug 'darrikonn/vim-gofmt'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -44,10 +43,10 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " Ui
 Plug 'morhetz/gruvbox'
-Plug 'flazz/vim-colorschemes'
-Plug 'scrooloose/nerdtree'
+"Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -55,14 +54,14 @@ Plug 'rafamadriz/friendly-snippets'
 
 call plug#end()
 
-let g:gruvbox_contrast_dark = 'hard'
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-let g:gruvbox_invert_selection='0'
+"let g:gruvbox_contrast_dark = 'hard'
+"if exists('+termguicolors')
+"    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"endif
+"let g:gruvbox_invert_selection='0'
 
-colorscheme gruvbox
+colorscheme dracula
 set background=dark
 
 lua require("lsp")
