@@ -34,7 +34,7 @@ alias cfg='cd ~/.config'
 alias fishe='nvim ~/.config/fish/config.fish'
 alias zshe='nvim ~/.zshrc'
 alias nvime='nvim ~/.config/nvim/init.vim'
-alias stare='nvim ~/.config/starship.toml'
+alias tmuxe='nvim ~/.config/tmux/tmux.conf'
 
 # Changing "ls" to "lsd"
 alias ls='lsa'
@@ -54,6 +54,7 @@ alias lsa='lsd -alh --group-dirs first'
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
+alias po="systemctl poweroff"
 
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
