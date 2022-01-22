@@ -15,52 +15,46 @@ export LANG=pt_BR.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+  export EDITOR="nvim"
 else
-  export EDITOR='nvim'
+  export EDITOR="nvim"
 fi
 
 # dev
-alias dev='cd ~/dev'
-alias devgo='cd ~/dev/Go'
-alias devpy='cd ~/dev/Python'
-alias devrs='cd ~/dev/Rust'
-alias devsh='cd ~/dev/ShellScript'
-alias books='cd ~/Books'
+alias dev="cd ~/dev"
 alias vim=nvim
 
 # Edit Configs
-alias cfg='cd ~/.config'
-alias fishe='nvim ~/.config/fish/config.fish'
-alias zshe='nvim ~/.zshrc'
-alias nvime='nvim ~/.config/nvim/init.vim'
-alias tmuxe='nvim ~/.config/tmux/tmux.conf'
+alias cfg="cd ~/.config"
+alias fishe="nvim ~/.config/fish/config.fish"
+alias zshe="nvim ~/.zshrc"
+alias nvime="nvim ~/.config/nvim/init.vim"
+alias tmuxe="nvim ~/.config/tmux/tmux.conf"
 
 # Changing "ls" to "lsd"
-alias ls='lsa'
-alias lsa='lsd -alh --group-dirs first'
+alias ls="lsa"
+alias lsa="lsd -alh --group-dirs first"
 
  # pacman and yay
- alias pacman='sudo pacman' # update only standard pkgs
- alias pacsyu='sudo pacman -Syyu' # update only standard pkgs
- alias yaysua='yay -Sua --noconfirm' # update only AUR pkgs (yay)
- alias yaysyu='yay -Syu --noconfirm' # update standard pkgs and AUR pkgs (yay)
- alias parsua='paru -Sua --noconfirm' # update only AUR pkgs (paru)
- alias parsyu='paru -Syu --noconfirm' # update standard pkgs and AUR pkgs (paru)
- alias unlock='sudo rm /var/lib/pacman/db.lck' # remove pacman lock
- alias cleanup='pacman -Qtdq | pacman -Rns -' # remove orphaned packages
+ alias pacman="sudo pacman" # update only standard pkgs
+ alias pacsyu="sudo pacman -Syyu" # update only standard pkgs
+ alias parsua="paru -Sua --noconfirm" # update only AUR pkgs (paru)
+ alias parsyu="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
+ alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
+ alias cleanup="pacman -Qtdq | pacman -Rns -" # remove orphaned packages
 
 # confirm before overwriting something
 alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
+alias mv="mv -i"
+alias rm="rm -i"
 alias po="systemctl poweroff"
 
 #add new fonts
-alias update-fc='sudo fc-cache -fv'
+alias update-fc="sudo fc-cache -fv"
 
 #Recent Installed Packages
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+#alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+alias rip="expac --timefmt='%d-%m-%Y %T' '%l\t%n %v'"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
 #get the error messages from journalctl
@@ -86,17 +80,17 @@ ex ()
       *.deb)       ar x $1 ;;
       *.tar.xz)    tar xf $1 -C /tmp/$1 ;;
       *.tar.zst)   tar xf $1 ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
+      *)           echo ""$1" cannot be extracted via ex()" ;;
      esac
    else
-     echo "'$1' is not a valid file"
+     echo ""$1" is not a valid file"
    fi
  }
 
 
 # Modified version where you can press
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND="fd --type f"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 # Fzf and cd dir
 f() {
@@ -120,7 +114,7 @@ fa() {
 }
 
 fo() {
-  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0)")
+  IFS=$"\n" out=("$(fzf-tmux --query="$1" --exit-0)")
   key=$(head -1 <<< "$out")
   file=$(head -2 <<< "$out" | tail -1)
   if [ -n "$file" ]; then
