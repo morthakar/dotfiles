@@ -9,41 +9,28 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH=$PATH:/usr/local/go/bin
+  export EDITOR="nvim"
 
 # You may need to manually set your language environment
 export LANG=pt_BR.UTF-8
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR="nvim"
-else
-  export EDITOR="nvim"
-fi
-
-# dev
-alias dev="cd ~/dev"
+# Alias
 alias vim=nvim
-
-# Edit Configs
-alias cfg="cd ~/.config"
-alias fishe="nvim ~/.config/fish/config.fish"
+alias dot="cd ~/.dotfiles/ && f"
 alias zshe="nvim ~/.zshrc"
 alias nvime="nvim ~/.config/nvim/init.vim"
 alias tmuxe="nvim ~/.config/tmux/tmux.conf"
-
-# Changing "ls" to "lsd"
 alias ls="lsa"
 alias lsa="lsd -alh --group-dirs first"
 
- # pacman and yay
+ # Pacman 
  alias pacman="sudo pacman" # update only standard pkgs
- alias pacsyu="sudo pacman -Syyu" # update only standard pkgs
- alias parsua="paru -Sua --noconfirm" # update only AUR pkgs (paru)
- alias parsyu="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
+ alias pacs="sudo pacman -Syyu" # update only standard pkgs
+ alias pars="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
  alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
  alias cleanup="pacman -Qtdq | pacman -Rns -" # remove orphaned packages
 
-# confirm before overwriting something
+# System
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -60,6 +47,7 @@ alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | n
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
+# Functions
 # ex = Extractor for all kinds of archives
 ex ()
 {
@@ -88,24 +76,24 @@ ex ()
  }
 
 
-# Modified version where you can press
-export FZF_DEFAULT_COMMAND="fd -H --type f"
+#  Fzf
+#export FZF_DEFAULT_COMMAND="fd -H -E '.git' --type f"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 # Fzf and cd dir
 f() {
   local dir
-  dir=$(fd ${1} -H | fzf +m)
+  dir=$(fd ${1} -H -E .git | fzf)
   if [[ -d "$dir" ]] ; then
       cd "$dir"
-  else
-      cd $(dirname "$dir")
+    elif [[ -n "$dir" ]] ; then
+      "$EDITOR" "$dir"
   fi
 }
 
 fa() {
   local dir
-  dir=$(fd ${1} -H . /  | fzf +m)
+  dir=$(fd . / -H | fzf)
   if [[ -d "$dir" ]] ; then
       cd "$dir"
   else
