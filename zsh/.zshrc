@@ -89,7 +89,7 @@ ex ()
 
 
 # Modified version where you can press
-export FZF_DEFAULT_COMMAND="fd --type f"
+export FZF_DEFAULT_COMMAND="fd -H --type f"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 # Fzf and cd dir

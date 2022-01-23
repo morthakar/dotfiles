@@ -1,0 +1,31 @@
+{% assign foreground = '%{F#f8f8f2}' %}
+{% assign current_line = '%{F#44475a}' %}
+{% assign comment = '%{F#6272a4}' %}
+{% assign cyan = '%{F#8be9fd}' %}
+{% assign green = '%{F#50fa7b}' %}
+{% assign orange = '%{F#ffb86c}' %}
+{% assign pink = '%{F#ff79c6}' %}
+{% assign purple = '%{F#bd93f9}' %}
+{% assign red = '%{F#ff5555}' %}
+{% assign yellow = '%{F#f1fa8c}' %}
+{% assign close = '%{F-}' %}
+
+{% for tag in workspace.tags %}
+{% if tag.mine %}
+%{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{T1} {{ pink }} {{tag.name}} {{ close }}
+%{A}
+{% elsif tag.visible  %}
+%{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{T1} {{ purple }} {{tag.name}} {{ close }}
+%{A}
+{% elsif tag.busy  %}
+%{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{T1} {{ comment }} {{tag.name}} {{ close }}
+%{A}
+{% else tag.visible  %}
+%{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
+{{ foreground }} %{T1} {{tag.name}} {{ close }}
+%{A}
+{% endif %}
+{% endfor %}

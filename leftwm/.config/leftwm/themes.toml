@@ -165,8 +165,8 @@ leftwm_versions = ">0.2.10"
 current = false
 
 [[repos.themes]]
-name = "Mytheme"
-directory = "/home/dref/.config/leftwm/themes/Mytheme"
+name = "dracula"
+directory = "/home/dref/.config/leftwm/themes/dracula"
 version = "0.0.0"
 leftwm_versions = "*"
 current = true

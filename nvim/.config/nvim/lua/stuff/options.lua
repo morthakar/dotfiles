@@ -12,6 +12,7 @@ vim.opt.showtabline = 2
 vim.opt.smartcase = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.swapfile = false
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.updatetime = 50

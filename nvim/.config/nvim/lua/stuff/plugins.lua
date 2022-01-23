@@ -50,8 +50,6 @@ return packer.startup(function(use)
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight.
 
   -- Ui
-  use "folke/which-key.nvim" -- Displays a popup with possible keybindings of the command you started typing.
-  use "goolord/alpha-nvim" -- Fast and fully customizable greeter for neovim
   use "nvim-lualine/lualine.nvim" -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
   use "kyazdani42/nvim-web-devicons" -- A lua `fork` of vim-web-devicons for neovim.
   use "kyazdani42/nvim-tree.lua" -- A file explorer tree for neovim written in lua.
@@ -80,10 +78,9 @@ use {'dracula/vim', as = 'dracula'}
 
   -- Telescope
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions 
+  use "nvim-lua/plenary.nvim" -- Useful lua functions.
   use "nvim-telescope/telescope.nvim" -- Find, Filter, Preview, Pick. All lua, all the time.
-  use "nvim-telescope/telescope-fzy-native.nvim" -- FZF sorter for telescope written in c
-
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   -- Treesitter
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"} -- Nvim Treesitter configurations and abstraction layer
   use "JoosepAlviste/nvim-ts-context-commentstring" -- Plugin for setting the commentstring based on the cursor location in a file.
