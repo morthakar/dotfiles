@@ -9,8 +9,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH=$PATH:/usr/local/go/bin
-  export EDITOR="nvim"
-
+export PATH=$PATH:/home/dref/.cargo/bin/
+export EDITOR="nvim"
 # You may need to manually set your language environment
 export LANG=pt_BR.UTF-8
 

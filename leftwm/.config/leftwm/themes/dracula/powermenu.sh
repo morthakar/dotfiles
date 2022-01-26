@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-THEME="$HOME/.config/leftwm/themes/current/polybar/rofi/powermenu.rasi"
-
+THEME="$SCRIPTPATH/rofi/powermenu.rasi"
 rofi_command="rofi -no-config -theme $THEME"
 
 uptime=$(uptime -p | sed -e 's/up //g') 

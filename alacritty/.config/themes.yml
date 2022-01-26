@@ -354,4 +354,4 @@ schemes:
 # *SolarizedDark
 # *TomorrowNight
 
-colors: *Dracula
+colors: *GruvboxDark

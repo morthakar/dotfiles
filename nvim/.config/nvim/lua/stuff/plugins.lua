@@ -57,7 +57,8 @@ return packer.startup(function(use)
   use "akinsho/toggleterm.nvim" -- persist and toggle multiple terminals during an editing session
 
   -- Colorschemes
-use {'dracula/vim', as = 'dracula'}
+  use "gruvbox-community/gruvbox"
+  use {'dracula/vim', as = 'dracula'}
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- A completion plugin for neovim coded in Lua.
