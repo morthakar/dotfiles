@@ -33,10 +33,10 @@ local branch = {
 lualine.setup({
 	options = {
 		icons_enabled = true,
-		theme = "auto",
+		theme = "gruvbox",
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+		disabled_filetypes = { "NvimTree", "Outline" },
 		always_divide_middle = true,
 	},
 	sections = {

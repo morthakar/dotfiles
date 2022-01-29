@@ -1,8 +1,8 @@
-local status_ok, _ = pcall(require, "lspconfig")
-if not status_ok then
-	return
-end
+DIRNAME = "stuff"
+local gopls = require(DIRNAME .. ".lsp.gopls")
+local sumneko_lua = require(DIRNAME .. ".lsp.sumneko_lua")
 
-require("stuff.lsp.lsp-installer")
-require("stuff.lsp.handlers").setup()
---require "stuff.lsp.null-ls"
+local servers = { gopls, sumneko_lua }
+for _, lsp in pairs(servers) do
+  lsp.setup()
+end

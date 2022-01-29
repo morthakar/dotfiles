@@ -48,17 +48,16 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim" -- Speed up loading Lua modules in Neovim to improve startup time.
   use "lukas-reineke/indent-blankline.nvim" -- Adds indentation guides to all lines (including empty lines).
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight.
+ -- use {"fatih/vim-go",  run = ':GoUpdateBinaries' }
 
   -- Ui
   use "nvim-lualine/lualine.nvim" -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
   use "kyazdani42/nvim-web-devicons" -- A lua `fork` of vim-web-devicons for neovim.
   use "kyazdani42/nvim-tree.lua" -- A file explorer tree for neovim written in lua.
   use "akinsho/bufferline.nvim" -- A snazzy buffer line (with minimal tab integration) for Neovim built using lua.
-  use "akinsho/toggleterm.nvim" -- persist and toggle multiple terminals during an editing session
 
   -- Colorschemes
   use "gruvbox-community/gruvbox"
-  use {'dracula/vim', as = 'dracula'}
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- A completion plugin for neovim coded in Lua.
@@ -73,15 +72,16 @@ return packer.startup(function(use)
 
   -- LSP
   use "neovim/nvim-lspconfig" -- Quickstart configurations for the Nvim LSP client.
-  use "williamboman/nvim-lsp-installer" -- Manage LSP servers locally with :LspInstall. With full Windows support!
-  use "tamago324/nlsp-settings.nvim" -- A plugin for setting Neovim LSP with JSON files.
-  use "jose-elias-alvarez/null-ls.nvim" -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
+ -- use "williamboman/nvim-lsp-installer" -- Manage LSP servers locally with :LspInstall. With full Windows support!
+ -- use "tamago324/nlsp-settings.nvim" -- A plugin for setting Neovim LSP with JSON files.
+ -- use "jose-elias-alvarez/null-ls.nvim" -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
 
   -- Telescope
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions.
   use "nvim-telescope/telescope.nvim" -- Find, Filter, Preview, Pick. All lua, all the time.
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
   -- Treesitter
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"} -- Nvim Treesitter configurations and abstraction layer
   use "JoosepAlviste/nvim-ts-context-commentstring" -- Plugin for setting the commentstring based on the cursor location in a file.
