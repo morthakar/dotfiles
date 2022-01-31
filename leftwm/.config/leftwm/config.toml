@@ -41,7 +41,7 @@ keybind = [
 {command = "MoveWindowTop", modifier = ["modkey"], key = "t"},
 
 # Increase/Decrease window
-{command = "CloseWindow", modifier = ["modkey", "Shift"], key = "w"},
+{command = "CloseWindow", modifier = ["modkey"], key = "w"},
 {command = "ToggleFullScreen", modifier = ["modkey"], key = "f"}, 
 {command = "FloatingToTile", modifier = ["modkey", "Shift"], key = "t"}, 
 {command = "TileToFloating", modifier = ["modkey", "Shift"], key = "f"},
