@@ -1,6 +1,6 @@
 local M = {}
 
-local sumneko_root_path = "/opt/lua-language-server"
+local sumneko_root_path = "/usr/lib/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 
 local lspconfig = require 'lspconfig'

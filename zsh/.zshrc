@@ -11,41 +11,34 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/dref/.cargo/bin/
 export EDITOR="nvim"
-# You may need to manually set your language environment
 export LANG=pt_BR.UTF-8
+export DOTFILES="$HOME/.dotfiles"
 
-# Alias
-alias vim=nvim
-alias dot="cd ~/.dotfiles/ && f"
-alias zshe="nvim ~/.zshrc"
-alias nvime="nvim ~/.config/nvim/init.vim"
-alias tmuxe="nvim ~/.config/tmux/tmux.conf"
-alias ls="lsa"
-alias lsa="lsd -alh --group-dirs first"
+# Defaults
+alias vim="$EDITOR"
+alias n="$EDITOR"
+alias ls="exa -la --icons --group-directories-first"
 
- # Pacman 
- alias pacman="sudo pacman" # update only standard pkgs
- alias pacs="sudo pacman -Syyu" # update only standard pkgs
- alias pars="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
- alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
- alias cleanup="pacman -Qtdq | pacman -Rns -" # remove orphaned packages
+# Edit Cfg
+alias dot="cd $DOTFILES"
+alias ze="$EDITOR $HOME/.zshrc"
+alias ne="$EDITOR $HOME/.config/nvim/init.lua"
+alias te="$EDITOR $HOME/.config/tmux/tmux.conf"
 
-# System
+# System Management
+alias up="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
+alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
+alias cleanup="pacman -Qtdq | pacman -Rns -" # remove orphaned packages
+alias pm="pacman -Qq | fzf --preview 'pacman -Qil {}' \
+  --layout=reverse --bind 'enter:execute(pacman -Qil {} | bat)'"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 alias po="systemctl poweroff"
+alias jctl="journalctl -p 3 -xb" #get the error messages from journalctl
 
 #add new fonts
 alias update-fc="sudo fc-cache -fv"
-
-#Recent Installed Packages
-#alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
-alias rip="expac --timefmt='%d-%m-%Y %T' '%l\t%n %v'"
-alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
-
-#get the error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
 
 # Functions
 # ex = Extractor for all kinds of archives
@@ -80,10 +73,9 @@ ex ()
 #export FZF_DEFAULT_COMMAND="fd -H -E '.git' --type f"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-# Fzf and cd dir
+# Find - find entries in the current directory, excluding some directories. 
 f() {
-  local dir
-  dir=$(fd ${1} -H -E .git | fzf)
+  local dir=$(fd ${1} -H -E .git -E .cache -E .local| fzf)
   if [[ -d "$dir" ]] ; then
       cd "$dir"
     elif [[ -n "$dir" ]] ; then
@@ -91,9 +83,9 @@ f() {
   fi
 }
 
+# Find All - find all entires in the root directory and cd to it.
 fa() {
-  local dir
-  dir=$(fd . / -H | fzf)
+  local dir=$(fd . / -H | fzf)
   if [[ -d "$dir" ]] ; then
       cd "$dir"
   else
@@ -101,13 +93,13 @@ fa() {
   fi
 }
 
-fo() {
-  IFS=$"\n" out=("$(fzf-tmux --query="$1" --exit-0)")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-      ${EDITOR:-vim} "$file"
+# Find all files in the $DOTFILES directory and use the $EDITOR to edit.
+cfg() {
+  local file=$(fd . "$DOTFILES" -t f -H -E .git | fzf)
+  if [[ -n "$file" ]] ; then
+      "$EDITOR" "$file"
   fi
 }
+
 
 eval "$(starship init zsh)"
