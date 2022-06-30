@@ -1,0 +1,12 @@
+#Dracula
+#default_border_color = #bd93f9
+#floating_border_color = "#bd93f9"
+#focused_border_color = "#ff79c6"
+
+#Gruvbox
+border_width = 2
+margin = 2
+workspace_margin = 2
+default_border_color = "#ebdbb2"
+floating_border_color = "#fabd2f"
+focused_border_color = "#fabd2f"

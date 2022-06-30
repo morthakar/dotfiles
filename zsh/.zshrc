@@ -14,23 +14,19 @@ export EDITOR="nvim"
 export LANG=pt_BR.UTF-8
 export DOTFILES="$HOME/.dotfiles"
 
+bindkey -s '^f' 'find_all\n'
+
 # Defaults
 alias vim="$EDITOR"
 alias n="$EDITOR"
 alias ls="exa -la --icons --group-directories-first"
 
-# Edit Cfg
-alias dot="cd $DOTFILES"
-alias ze="$EDITOR $HOME/.zshrc"
-alias ne="$EDITOR $HOME/.config/nvim/init.lua"
-alias te="$EDITOR $HOME/.config/tmux/tmux.conf"
-
 # System Management
-alias up="paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
+alias up="sudo pacman -Syu && paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
 alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
-alias cleanup="pacman -Qtdq | pacman -Rns -" # remove orphaned packages
-alias pm="pacman -Qq | fzf --preview 'pacman -Qil {}' \
-  --layout=reverse --bind 'enter:execute(pacman -Qil {} | bat)'"
+alias cleanup="sudo pacman -Qtdq | sudo pacman -Rns -" # remove orphaned packages
+#alias pm="pacman -Qeq | fzf --preview 'pacman -Qei {}' --layout=reverse \
+#  --bind 'enter:execute(pacman -Ql {} | fzf)' --height 55%"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -73,33 +69,50 @@ ex ()
 #export FZF_DEFAULT_COMMAND="fd -H -E '.git' --type f"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-# Find - find entries in the current directory, excluding some directories. 
+# Find - find entries in the current directory, excluding some directories.
 f() {
-  local dir=$(fd ${1} -H -E .git -E .cache -E .local| fzf)
-  if [[ -d "$dir" ]] ; then
-      cd "$dir"
-    elif [[ -n "$dir" ]] ; then
-      "$EDITOR" "$dir"
+  local search=$(fd ${1} . $HOME -H | fzf)
+  if [[ -d "$search" ]] ; then
+      cd "$search"
+    elif [[ -n "$search" ]] ; then
+      "$EDITOR" "$search"
   fi
 }
 
 # Find All - find all entires in the root directory and cd to it.
-fa() {
-  local dir=$(fd . / -H | fzf)
-  if [[ -d "$dir" ]] ; then
-      cd "$dir"
-  else
-      cd $(dirname "$dir")
-  fi
+find_all() {
+    local dir=$HOME
+    local search=$(fd . $dir -H | fzf --prompt 'DOTFILES> ' \
+             --header 'CTRL-D: Directories / CTRL-F: Files' \
+             --bind 'ctrl-d:change-prompt(Directories> )+reload(fd -t d -H)' \
+             --bind 'ctrl-f:change-prompt(Files> )+reload(fd -t f -H)')
+
+     if [[ -d "$search" ]] ; then
+          cd "$search"
+
+     elif [[ -n "$search" ]] ; then
+          "$EDITOR" "$search"
+      fi
+
 }
 
-# Find all files in the $DOTFILES directory and use the $EDITOR to edit.
-cfg() {
-  local file=$(fd . "$DOTFILES" -t f -H -E .git | fzf)
-  if [[ -n "$file" ]] ; then
-      "$EDITOR" "$file"
-  fi
+# Manage Packages
+pm() {
+    pacman -Qeq | fzf \
+    --prompt 'Package Manager> ' \
+    --height '55%' \
+    --preview 'pacman -Qei {}' \
+    --bind 'ctrl-d:change-prompt(AUR> )+reload(pacman -Qqm)' \
+    --bind 'ctrl-f:change-prompt(Native> )+reload(pacman -Qqn)' \
+    --bind 'enter:execute(pacman -Ql {} | fzf)'
 }
 
-
+testt() {
+    LC_ALL=C.UTF-8 pacman -Qi | awk '\
+    /^Name/{name=$3} \
+    /^Installed Size/{size=$3} \
+    {print size, name}' \
+    | sort -h
+}
 eval "$(starship init zsh)"
+
