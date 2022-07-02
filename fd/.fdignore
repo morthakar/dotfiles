@@ -3,4 +3,5 @@
 /.local
 /.vim
 /.cache
+/.cargo
 

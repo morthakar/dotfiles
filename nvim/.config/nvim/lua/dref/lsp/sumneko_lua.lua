@@ -12,7 +12,7 @@ local function create_autocmd()
 end
 
 local sumneko_lua = {}
-sumneko_lua.init = function(on_attach, capabilities)
+sumneko_lua.init = function(--[[on_attach,--]] capabilities)
     return {
         cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
         settings = {
@@ -37,7 +37,7 @@ sumneko_lua.init = function(on_attach, capabilities)
             },
         },
         on_attach = function()
-            on_attach()
+            --on_attach()
             create_autocmd()
         end,
         capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),

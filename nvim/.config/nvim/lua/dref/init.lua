@@ -34,10 +34,13 @@ local xnoremap = require("dref.keymap").xnoremap
 local inoremap = require("dref.keymap").inoremap
 
 nnoremap("<C-e>", ":Ex<CR>")
-nnoremap("<leader>u", ":UndotreeShow<CR>")
 
 vnoremap("K", ":m '<-2<CR>gv=gv") -- Move selection up
 vnoremap("J", ":m '>+1<CR>gv=gv") -- Move selection down
+
+-- Move files
+nnoremap("<C-Left>", ":bprev<CR>")
+nnoremap("<C-Right>", ":bnext<CR>")
 
 -- Opens line below or above the current line
 inoremap("<S-CR>", "<C-o>o")
@@ -51,18 +54,6 @@ nnoremap("J", "mzJ`z") -- Move line up
 
 nnoremap("<C-d>", "<C-d>zz") -- Scroll down
 nnoremap("<C-u>", "<C-u>zz") -- Scroll up
-
--- greatest remap ever
-xnoremap("<leader>p", "\"_dP")
-
--- next greatest remap ever : asbjornHaland
-nnoremap("<leader>y", "\"+y")
-vnoremap("<leader>y", "\"+y")
-nmap("<leader>Y", "\"+Y")
-
-nnoremap("<leader>d", "\"_d")
-vnoremap("<leader>d", "\"_d")
-vnoremap("<leader>d", "\"_d")
 
 -- Remap some keys
 inoremap("<C-c>", "<Esc>")

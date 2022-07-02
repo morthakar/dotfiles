@@ -71,12 +71,13 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 # Find - find entries in the current directory, excluding some directories.
 f() {
-  local search=$(fd ${1} . $HOME -H | fzf)
-  if [[ -d "$search" ]] ; then
-      cd "$search"
-    elif [[ -n "$search" ]] ; then
-      "$EDITOR" "$search"
-  fi
+    local dir="/"
+    local search=$(fd . $dir -H | fzf)
+    if [[ -d "$search" ]] ; then
+        cd "$search"
+      elif [[ -n "$search" ]] ; then
+        "$EDITOR" "$search"
+    fi
 }
 
 # Find All - find all entires in the root directory and cd to it.
@@ -84,8 +85,8 @@ find_all() {
     local dir=$HOME
     local search=$(fd . $dir -H | fzf --prompt 'DOTFILES> ' \
              --header 'CTRL-D: Directories / CTRL-F: Files' \
-             --bind 'ctrl-d:change-prompt(Directories> )+reload(fd -t d -H)' \
-             --bind 'ctrl-f:change-prompt(Files> )+reload(fd -t f -H)')
+             --bind 'ctrl-d:change-prompt(Directories> )+reload(fd . $dir -t d -H)' \
+             --bind 'ctrl-f:change-prompt(Files> )+reload(fd . $dir -t f -H)')
 
      if [[ -d "$search" ]] ; then
           cd "$search"

@@ -26,7 +26,7 @@ local function create_autocmd()
     })
 end
 
-gopls.init = function(on_attach, capabilities)
+gopls.init = function(--[[on_attach,--]] capabilities)
     return {
         cmd = { "gopls" },
         settings = {
@@ -42,7 +42,7 @@ gopls.init = function(on_attach, capabilities)
             },
         },
         on_attach = function()
-            on_attach()
+            --on_attach()
             create_autocmd()
         end,
         capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),

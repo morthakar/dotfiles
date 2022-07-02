@@ -1,0 +1,135 @@
+configuration {
+  show-icons: true;
+  disable-history: false;
+  fullscreen: false;
+  hide-scrollbar: true;
+  sidebar-mode: false;
+}
+
+* {
+  font: "Fira Code NF bold 12";
+  background: #282a36;
+  current-line: #44475a;
+  foreground: #f8f8f2;
+  comment: #6272a4;
+  cyan: #8be9fd;
+  green: #50fa7b;
+  orange: #ffb86c;
+  pink: #ff79c6;
+  purple: #bd93f9;
+  red: #ff5555;
+  yellow: #f1fa8c;
+  primary: #ff79c6;
+  selected-foreground: #bd93f9;
+  selected-background: #b2b2b2;
+  separatorcolor: #ff79c6;
+  bordercolor: #ff79c6;
+  highlightcolor: #8be9fd;
+  transparent: #00000000;
+}
+
+#window {
+    transparent: "real";
+    background-color: @background;
+    text-color: @foreground;
+    border: 2;
+    border-color: @purple;
+    //border-radius: 8;
+    width: 20%;
+    location: center;
+    x-offset: 0;
+    y-offset: 0;
+    children: [ mainbox ];
+}
+
+#mainbox {
+    background-color: @transparent;
+    children: [ inputbar, listview ];
+}
+
+entry {
+	font: "Inter Regular 11";
+	background-color: @transparent;
+	text-color: @foreground;
+	expand: true;
+	vertical-align: 0.5;
+	horizontal-align: 0.5;
+	placeholder: "Type to search";
+	placeholder-color: @foreground;
+	blink: true;
+}
+
+case-indicator {
+	background-color: @transparent;
+	text-color: @foreground;
+	vertical-align: 0.5;
+	horizontal-align: 0.5;
+}
+
+entry-wrapper {
+	orientation: horizontal;
+	vertical-align: 0.5;
+	spacing: 4px;
+	background-color: @transparent;
+	children: [ entry, case-indicator ];
+}
+
+#inputbar {
+    children: [ entry-wrapper ];
+    background-color: @red;
+    text-color: @red;
+    expand: false;
+    border: 0px 0px 0px 0px;
+    border-radius: 0px;
+    border-color: @red;
+    margin: 0px;
+    padding: 0px;
+}
+
+#prompt {
+    background-color: @background;
+    text-color: @pink;
+    enabled: true;
+}
+
+#listview {
+    background-color: @background;
+    padding: 0px;
+    columns: 1;
+    lines: 5;
+    spacing: 0px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    children: [ element ];
+}
+
+#element {
+  background-color: @transparent;
+  text-color: @pink;
+  orientation: horizontal;
+  border-radius: 0;
+  padding: 10px;
+  children: [element-text ];
+}
+
+#element-text {
+  font: "Fira Code NF 16";
+  background-color: @transparent;
+  text-color: inherit;
+  horizontal-align: 0.5;
+  vertical-align: 0;
+}
+
+//#element-icon {
+//  size: 0.9em;
+//  background-color: @transparent;
+//  text-color: inherit;
+//}
+
+#element.selected {
+  background-color: @comment;
+  text-color: @foreground;
+  border: 0;
+  border-radius: 0;
+}

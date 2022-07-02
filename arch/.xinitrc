@@ -22,3 +22,4 @@ export SSH_AUTH_SOCK
 mkdir -p "$HOME"/.local/share/keyrings
 
 udiskie &
+dbus-launch leftwm
