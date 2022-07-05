@@ -2,19 +2,19 @@
 
 {% for tag in workspace.tags %}
 {% if tag.mine %}
-%{A1:$MAINPATH/scripts/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
 %{T4} %{F#cc241d} {{tag.name}} {{ close }}
 %{A}
 {% elsif tag.visible  %}
-%{A1:$MAINPATH/scripts/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
 %{T4} %{F#fabd2f} {{tag.name}} {{ close }}
 %{A}
 {% elsif tag.busy  %}
-%{A1:$MAINPATH/scripts/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
 %{T4} %{F#32302f} {{tag.name}} {{ close }}
 %{A}
 {% else tag.visible  %}
-%{A1:$MAINPATH/scripts/change_to_tag {{workspace.index}} {{tag.index}}:}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
 %{F#ebdbb2} %{T4} {{tag.name}} {{ close }}
 %{A}
 {% endif %}
