@@ -65,7 +65,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true }) -- Move selecti
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true }) -- Move selection up
 
 -- Telescope
+vim.keymap.set("n", "<leader><F1>", "<cmd>Telescope help_tags<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>", { noremap = true })
-vim.keymap.set("n", "<leader><F1>", "<cmd>Telescope help_tags<CR>", { noremap = true })
