@@ -41,12 +41,10 @@ keybind = [
 {command = "MoveWindowTop", modifier = ["modkey"], key = "t"},
 
 # Increase/Decrease window
-{command = "CloseWindow", modifier = ["modkey"], key = "w"},
+{command = "CloseWindow", modifier = ["modkey"], key = "q"},
 {command = "ToggleFullScreen", modifier = ["modkey"], key = "f"},
-{command = "FloatingToTile", modifier = ["modkey", "Shift"], key = "t"},
-{command = "TileToFloating", modifier = ["modkey", "Shift"], key = "f"},
-{command = "IncreaseMainWidth", value = "5", modifier = ["modkey", "Control"], key = "h"},
-{command = "DecreaseMainWidth", value = "5", modifier = ["modkey", "Control"], key = "l"},
+{command = "IncreaseMainWidth", value = "5", modifier = ["modkey", "Control"], key = "Up"},
+{command = "DecreaseMainWidth", value = "5", modifier = ["modkey", "Control"], key = "Down"},
 {command = "SetMarginMultiplier", value = "1.0", modifier = ["modkey"], key = "m"},
 
 # Go to tag

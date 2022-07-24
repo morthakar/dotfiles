@@ -96,6 +96,34 @@ find_all() {
       fi
 
 }
+# Start tmux work session
+tw() {
+    local search="$HOME/dev"
+    if [[ $# -eq 1 ]]; then
+        selected=$1
+    else
+        selected=$(fd . "$search" -t d --max-depth 2 | fzf)
+    fi
+
+    if [[ -z $selected ]]; then
+        return
+    fi
+
+    selected_name=$(basename "$selected" | tr . _)
+    tmux_running=$(pgrep tmux)
+    if [[ -z $TMUX  ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux new-session -s $selected_name -c $selected
+        exit 0
+    elif [[ -z $TMUX  ]] && tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux attach-session -t $selected_name
+        exit 0
+    elif [[ -n $TMUX  ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux new-session -ds $selected_name -c $selected
+        tmux switch-client -t $selected_name
+        exit 0
+    fi
+    return
+}
 
 # Manage Packages
 pm() {
@@ -116,4 +144,3 @@ testt() {
     | sort -h
 }
 eval "$(starship init zsh)"
-

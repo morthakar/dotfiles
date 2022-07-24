@@ -1,0 +1,6 @@
+require("dref.plugins.autopairs")
+require("dref.plugins.colors")
+require("dref.plugins.cmp")
+require("dref.plugins.treesitter")
+require("dref.plugins.packer")
+require("dref.plugins.lualine")

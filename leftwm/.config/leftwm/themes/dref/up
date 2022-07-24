@@ -28,13 +28,11 @@ if [[ -x "$(command -v feh)" ]]; then
   feh --bg-fill "$MAINPATH"/background.png
 fi
 
-index=0
-export WORKSPACE="workspace$index"
+export INDEX=0
 leftwm-state -q -n -t "$MAINPATH"/sizes.liquid | sed -r '/^\s*$/d' | while read -r width
 do
-#  barname="mainbar$index"
-  monitor="$(polybar -m | awk -v i="$(( index + 1 ))" 'NR==i{print}' | sed s/:.*// | tr -d '\n')"
-  monitor=$monitor width=$(( width - 16 )) polybar -c "$POLYBAR"/polybar.config main &
-  index=$((index+1))
-  WORKSPACE="workspace$index"
+    monitor="$(polybar -m | awk -v i="$(( INDEX + 1 ))" 'NR==i{print}' | sed s/:.*// | tr -d '\n')"
+    monitor=$monitor width=$(( width - 16 )) polybar -c "$POLYBAR"/polybar.ini main &2> /dev/null
+    echo "$INDEX $monitor $width"
+    INDEX=$(( INDEX + 1 ))
 done
