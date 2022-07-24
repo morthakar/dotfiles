@@ -523,5 +523,6 @@ let-env config = {
 
 def fzf_trigger [path = $env.HOME] {
     let-env FZF_DEFAULT_OPTS = "--height 40% --layout=reverse --border"
-    ^fd . $path -H | fzf
+    let ret = (^fd . $path -H | fzf)
+	let-env PWD = $ret
 }
