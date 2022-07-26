@@ -1,12 +1,11 @@
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost packer.lua source <afile> | PackerSync
-  augroup end
-]]
+--vim.cmd [[
+--  augroup packer_user_config
+--    autocmd!
+--    autocmd BufWritePost packer.lua source <afile> | PackerSync
+--  augroup end
+--]]
 
--- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
 	return
@@ -28,6 +27,7 @@ return require("packer").startup(function()
 	use("tpope/vim-repeat")
 	use("windwp/nvim-autopairs")
 	use("nvim-lualine/lualine.nvim")
+	use { 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons' }
 
 	-- Telescope
 	use("nvim-lua/plenary.nvim")
@@ -39,7 +39,6 @@ return require("packer").startup(function()
 	use("onsails/lspkind-nvim")
 	use("nvim-lua/lsp_extensions.nvim")
 	use("simrat39/symbols-outline.nvim")
-	use("jose-elias-alvarez/null-ls.nvim")
 
 	-- Completion
 	use("hrsh7th/cmp-nvim-lsp")
@@ -58,9 +57,7 @@ return require("packer").startup(function()
 	use("navarasu/onedark.nvim")
 
 	-- Treesitter
-	use("nvim-treesitter/nvim-treesitter", {
-		run = ":TSUpdate"
-	})
+	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
 
 	-- Debug
 	use("mfussenegger/nvim-dap")

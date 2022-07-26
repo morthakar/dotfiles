@@ -32,6 +32,7 @@ autocmd({ "BufWritePre" }, {
 require("dref")
 require("dref.lsp")
 require("dref.plugins.autopairs")
+require("dref.plugins.bufferline")
 require("dref.plugins.cmp")
 require("dref.plugins.colors")
 require("dref.plugins.lualine")

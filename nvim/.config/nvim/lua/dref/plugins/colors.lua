@@ -1,11 +1,13 @@
 local theme = "onedark"
 
 if theme == "onedark" then
-	-- Options: dark, darker, cool, deep, warm, warmer, light
-	require('onedark').setup {
-		style = 'warmer'
-	}
-	require('onedark').load()
+	local ok, onedark = pcall(require, "onedark")
+	if not ok then
+		return
+	end
+
+	onedark.setup { style = 'warmer' } -- Options: dark, darker, cool, deep, warm, warmer, light
+	onedark.load()
 end
 
 if theme == "gruvbox" then
