@@ -1,0 +1,35 @@
+#!/bin/sh
+
+getty="/etc/systemd/system/getty@tty1.service.d/"
+
+# Look for directories and files in depth 2 of the script path
+# and create's all symbolic links.
+function create_all_links(){
+	for f in {*/*,*/.?*?}; do
+		create_link "$(readlink -f $f)"
+	done
+}
+
+# Create's the symbolic link setting the destination.
+function create_link(){
+	local src="$(dirname $1)"
+	if [[ "$src" == "$DOTFILES/config"  ]]; then
+		ln -sv "$1" "$HOME/.config"
+	elif [[ "$src" == "$DOTFILES/home" ]]; then
+		ln -sv "$1" "$HOME"
+	fi
+}
+
+function main(){
+	# Check if the enviroment variable $DOTFILES is set
+	# and its the current working dir.
+	if [[ -z "$DOTFILES" && "$(pwd)" != "$DOTFILES" ]]; then
+		echo "error: this script must be executed in env:DOTFILES"
+		exit 1
+	fi
+
+	create_all_links
+}
+
+main
+
