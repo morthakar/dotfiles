@@ -1,0 +1,35 @@
+#!/bin/sh
+export MAINPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+export THEME="gruvbox"
+export HWMON="$(fd . /sys/devices/platform | rg temp1_input)"
+
+# Down the last running theme
+if [ -f "/tmp/leftwm-theme-down" ]; then
+    /tmp/leftwm-theme-down
+    rm /tmp/leftwm-theme-down
+fi
+ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
+
+# Boot picom or compton if it exists
+if [[ -x "$(command -v picom)" ]]; then
+  picom --experimental-backends > /dev/null &
+fi
+
+# Set the theme.toml config
+leftwm command "LoadTheme $MAINPATH/theme.ron"
+
+# Set background
+if [[ -x "$(command -v feh)" ]]; then
+  feh --bg-fill "$MAINPATH"/background.png
+fi
+
+monitors=($(polybar -m | sed 's/:.*//'))
+polybarpath="$DOTFILES"/.config/polybar
+polybarcfg="$DOTFILES/.config/polybar/polybar.ini"
+barname=("main0" "main1")
+
+for i in "${!monitors[@]}"; do
+	# used to set bar and workspace.
+	polybar="$polybarpath" monitor="${monitors[$i]}" index="$i" \
+	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
+done

@@ -19,19 +19,22 @@ bindkey -s '^f' 'find_all\n'
 # Defaults
 alias vim="$EDITOR"
 alias n="$EDITOR"
-alias ls="exa -la --icons --group-directories-first"
+alias ls="exa -lagF@Hn --icons --group-directories-first"
 
 # System Management
-alias up="sudo pacman -Syu && paru -Syu --noconfirm" # update standard pkgs and AUR pkgs (paru)
+alias up="sudo pacman -Syu && paru -Syu --noconfirm && polybar-msg cmd restart" # update standard pkgs and AUR pkgs (paru)
 alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
 alias cleanup="sudo pacman -Qtdq | sudo pacman -Rns -" # remove orphaned packages
-#alias pm="pacman -Qeq | fzf --preview 'pacman -Qei {}' --layout=reverse \
-#  --bind 'enter:execute(pacman -Ql {} | fzf)' --height 55%"
+alias cleancache="paccache -r && paru -Scc"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 alias po="systemctl poweroff"
 alias jctl="journalctl -p 3 -xb" #get the error messages from journalctl
+
+# Tmux
+alias tsq="tmux kill-server"
+alias tsk="tmux kill-session"
 
 #add new fonts
 alias update-fc="sudo fc-cache -fv"
@@ -69,59 +72,49 @@ ex ()
 #export FZF_DEFAULT_COMMAND="fd -H -E '.git' --type f"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-# Find - find entries in the current directory, excluding some directories.
-f() {
-    local dir="/"
-    local search=$(fd . $dir -H | fzf)
-    if [[ -d "$search" ]] ; then
-        cd "$search"
-      elif [[ -n "$search" ]] ; then
-        "$EDITOR" "$search"
-    fi
-}
-
 # Find All - find all entires in the root directory and cd to it.
-find_all() {
-    local dir=$HOME
+fa() {
+    local dir=${1:-"$HOME"}
 	local search=$(fd . $dir -H | fzf --prompt "$dir " \
-             --header 'CTRL-d: Directories | CTRL-f: Files' \
-			 --bind "ctrl-d:change-prompt(Directories> )+reload(fd . $dir -t d -H)" \
-             --bind "ctrl-f:change-prompt(Files> )+reload(fd . $dir -t f -H)")
+             --header 'CTRL-d: Dir | CTRL-f: Files' \
+			 --bind "ctrl-d:change-prompt(Dir > )+reload(fd . $dir -t d -H)" \
+			 --bind "ctrl-f:change-prompt(Files > )+reload(fd . $dir -t f -H)")
 
      if [[ -d "$search" ]] ; then
           cd "$search"
 
-     elif [[ -n "$search" ]] ; then
+     elif [[ -f "$search" ]] ; then
+		 cd $(dirname "$search")
           "$EDITOR" "$search"
       fi
 
 }
-# Start tmux work session
-tw() {
-    local search="$HOME/dev"
-    if [[ $# -eq 1 ]]; then
-        selected=$1
-    else
-        selected=$(fd . "$search" -t d --max-depth 2 | fzf)
-    fi
 
-    if [[ -z $selected ]]; then
-        return
-    fi
+function tmux_create_sesssion() {
+	tmux new-session -d -s $session -c $dir #-n ${3:-"$EDITOR"}
+#	tmux new-window -n run -d -t "$1" -c "$2"
+#	tmux send -t "$1:1" "$EDITOR" Enter
+#	tmux send -t "$1:2" "ls" Enter
+}
 
-    selected_name=$(basename "$selected" | tr . _)
-    tmux_running=$(pgrep tmux)
-    if [[ -z $TMUX  ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
-        tmux new-session -s $selected_name -c $selected
-        exit 0
-    elif [[ -z $TMUX  ]] && tmux has-session -t=$selected_name 2> /dev/null; then
-        tmux attach-session -t $selected_name
-        exit 0
-    elif [[ -n $TMUX  ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
-        tmux new-session -ds $selected_name -c $selected
-        tmux switch-client -t $selected_name
-        exit 0
-    fi
+function ts() {
+    #local search=${1:-"$HOME"}
+    local dir=${1:-"$(fd . "$HOME" -t d -H | fzf)"}
+    local session=$(basename "$dir")
+
+	if [[ -z "$TMUX"  ]]; then
+		if tmux has -t "$session" 2> /dev/null; then
+			tmux attach -t "$session"
+		else
+			tmux_create_sesssion "$session" "$dir"
+			tmux attach -t "$session"
+		fi
+	elif [[ -n "$TMUX" ]]; then
+		if ! tmux has -t "$session" 2> /dev/null; then
+			tmux_create_sesssion "$session" "$dir"
+			tmux switch-client -t "$session"
+		fi
+	fi
     return
 }
 
@@ -136,11 +129,4 @@ pm() {
     --bind 'enter:execute(pacman -Ql {} | fzf)'
 }
 
-testt() {
-    LC_ALL=C.UTF-8 pacman -Qi | awk '\
-    /^Name/{name=$3} \
-    /^Installed Size/{size=$3} \
-    {print size, name}' \
-    | sort -h
-}
 eval "$(starship init zsh)"

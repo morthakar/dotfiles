@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if ! type -P fakeroot >/dev/null; then
+	error 'Cannot find the fakeroot binary'
+fi
+
+if [[ -z $CHECKUPDATES_DB ]]; then
+	CHECKUPDATES_DB="${TMPDIR:-/tmp}/checkup-db-${UID}/"
+fi
+
+trap 'rm -f $CHECKUPDATES_DB/db.lck' INT TERM EXIT
+
+DBPath="$(pacman-conf DBPath)"
+if [[ -z "$DBPath" ]] || [[ ! -d "$DBPath" ]]; then
+	DBPath="/var/lib/pacman/"
+fi
+
+mapfile -t updates < <(pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]')
+
+function sync_db(){
+	mkdir -p "$CHECKUPDATES_DB"
+	ln -s "${DBPath}/local" "$CHECKUPDATES_DB" &> /dev/null
+	if ! fakeroot -- pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
+	    echo "error: Cannot fetch updates"
+		exit 1
+	fi
+}
+
+function notify_dunst(){
+	if [[ -x "$(command -v notify-send)" && "${#updates[@]}" > 0 ]]; then
+		notify-send "Update Available" "$(printf '%s\n' "${updates[@]}")"
+	fi
+}
+
+if [[ -z "$1" ]]; then
+	sleep 10
+	sync_db
+	printf '%s %s' "${#updates[@]}" "Update(s)"
+	notify_dunst
+fi
+
+if [[ "$1" == notify ]]; then
+	notify_dunst
+fi
+

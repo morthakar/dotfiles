@@ -21,5 +21,7 @@ export SSH_AUTH_SOCK
 # see https://github.com/NixOS/nixpkgs/issues/14966#issuecomment-520083836
 mkdir -p "$HOME"/.local/share/keyrings
 
+export DOTFILES="$HOME/dotfiles"
+
 udiskie &
 dbus-launch leftwm
