@@ -4,4 +4,13 @@
 /.vim
 /.cache
 /.cargo
-
+/.java
+/go/
+/packages/
+/.bkp*/
+*/Brave*
+*/VirtualBox/
+/VirtualBox*/
+/Burp*
+/.Burp*
+/.oh-my*

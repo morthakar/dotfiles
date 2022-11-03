@@ -9,20 +9,25 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/dref/.cargo/bin/
+#export PATH=$PATH:/home/dref/.cargo/bin/
 export EDITOR="nvim"
 export LANG=pt_BR.UTF-8
 export DOTFILES="$HOME/dotfiles"
 
-bindkey -s '^f' 'find_all\n'
+# bind CTRL + f to call function.
+bindkey -s '^f' 'fa\n'
 
 # Defaults
 alias vim="$EDITOR"
 alias n="$EDITOR"
-alias ls="exa -lagF@Hn --icons --group-directories-first"
+alias ls="exa -lagF@H --icons --group-directories-first"
+
+# Tmux
+alias tsq="tmux kill-server"
+alias tsk="tmux kill-session"
 
 # System Management
-alias up="sudo pacman -Syu && paru -Syu --noconfirm && polybar-msg cmd restart" # update standard pkgs and AUR pkgs (paru)
+alias up="paru -Syu && polybar-msg cmd restart" # update standard pkgs and AUR pkgs
 alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
 alias cleanup="sudo pacman -Qtdq | sudo pacman -Rns -" # remove orphaned packages
 alias cleancache="paccache -r && paru -Scc"
@@ -32,16 +37,11 @@ alias rm="rm -i"
 alias po="systemctl poweroff"
 alias jctl="journalctl -p 3 -xb" #get the error messages from journalctl
 
-# Tmux
-alias tsq="tmux kill-server"
-alias tsk="tmux kill-session"
-
 #add new fonts
 alias update-fc="sudo fc-cache -fv"
 
-# Functions
-# ex = Extractor for all kinds of archives
-ex ()
+# Extractor for all kinds of archives
+function ex ()
 {
 	(mkdir /tmp/$1)
   if [ -f $1 ] ; then
@@ -73,7 +73,7 @@ ex ()
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 # Find All - find all entires in the root directory and cd to it.
-fa() {
+function fa() {
     local dir=${1:-"$HOME"}
 	local search=$(fd . $dir -H | fzf --prompt "$dir " \
              --header 'CTRL-d: Dir | CTRL-f: Files' \
@@ -100,7 +100,11 @@ function tmux_create_sesssion() {
 function ts() {
     #local search=${1:-"$HOME"}
     local dir=${1:-"$(fd . "$HOME" -t d -H | fzf)"}
-    local session=$(basename "$dir")
+    local session=$(basename "$dir" | tr . _)
+
+	if [[ !  -d "$dir" ]]; then
+		return
+	fi
 
 	if [[ -z "$TMUX"  ]]; then
 		if tmux has -t "$session" 2> /dev/null; then
@@ -119,7 +123,7 @@ function ts() {
 }
 
 # Manage Packages
-pm() {
+function pm() {
     pacman -Qeq | fzf \
     --prompt 'Package Manager> ' \
     --height '55%' \

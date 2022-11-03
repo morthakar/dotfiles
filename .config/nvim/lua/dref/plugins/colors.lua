@@ -1,4 +1,4 @@
-local theme = "onedark"
+local theme = "gruvbox"
 
 if theme == "onedark" then
 	local ok, onedark = pcall(require, "onedark")
