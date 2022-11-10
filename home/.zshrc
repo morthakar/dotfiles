@@ -13,6 +13,7 @@ export PATH=$PATH:/usr/local/go/bin
 export EDITOR="nvim"
 export LANG=pt_BR.UTF-8
 export DOTFILES="$HOME/dotfiles"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # bind CTRL + f to call function.
 bindkey -s '^f' 'fa\n'
@@ -27,10 +28,10 @@ alias tsq="tmux kill-server"
 alias tsk="tmux kill-session"
 
 # System Management
-alias up="paru -Syu && polybar-msg cmd restart" # update standard pkgs and AUR pkgs
+alias up="yay -Syu && polybar-msg cmd restart" # update standard pkgs and AUR pkgs
 alias unlock="sudo rm /var/lib/pacman/db.lck" # remove pacman lock
 alias cleanup="sudo pacman -Qtdq | sudo pacman -Rns -" # remove orphaned packages
-alias cleancache="paccache -r && paru -Scc"
+alias cleancache="paccache -r && yay -Scc"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -132,5 +133,16 @@ function pm() {
     --bind 'ctrl-f:change-prompt(Native> )+reload(pacman -Qqn)' \
     --bind 'enter:execute(pacman -Ql {} | fzf)'
 }
+
+function pma() {
+    pacman -Qq | fzf \
+    --prompt 'Package Manager> ' \
+    --height '55%' \
+    --preview 'pacman -Qi {}' \
+    --bind 'ctrl-d:change-prompt(AUR> )+reload(pacman -Qqm)' \
+    --bind 'ctrl-f:change-prompt(Native> )+reload(pacman -Qqn)' \
+    --bind 'enter:execute(pacman -Ql {} | fzf)'
+}
+
 
 eval "$(starship init zsh)"
