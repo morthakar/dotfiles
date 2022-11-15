@@ -23,5 +23,5 @@ mkdir -p "$HOME"/.local/share/keyrings
 
 export DOTFILES="$HOME/dotfiles"
 
-udiskie &
-dbus-launch leftwm
+numlockx &
+exec leftwm

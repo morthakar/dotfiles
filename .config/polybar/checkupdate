@@ -33,7 +33,7 @@ function notify_dunst(){
 }
 
 function check_connection(){
-	while ! nmcli g | awk '{ print $2 }' | grep comp &> /dev/null; do
+	while ! networkctl list | grep routable &> /dev/null; do
 		sleep 10
 	done
 }
