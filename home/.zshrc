@@ -41,6 +41,12 @@ alias jctl="journalctl -p 3 -xb" #get the error messages from journalctl
 #add new fonts
 alias update-fc="sudo fc-cache -fv"
 
+function tcolors (){
+	for i in {0..255}; do
+		printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
+	done
+}
+
 # Extractor for all kinds of archives
 function ex ()
 {
