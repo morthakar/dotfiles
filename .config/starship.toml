@@ -9,6 +9,25 @@ disabled = true
 [character]                            # The name of the module we are configuring is "character"
 success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
 
+[directory]
+format="[$path]($style)[$read_only]($read_only_style) "
+style="bold blue"
+read_only = " "
+read_only_style="red"
+truncation_symbol=""
+truncation_length= 10
+truncate_to_repo = false
+#repo_root_style="($style)"
+repo_root_format="[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+home_symbol="~"
+
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
 [aws]
 symbol = " "
 
@@ -23,9 +42,6 @@ symbol = " "
 [dart]
 symbol = " "
 
-[directory]
-read_only = " "
-truncate_to_repo = false
 
 [docker_context]
 format = "via [🐋 $context](blue bold)"
@@ -120,6 +136,3 @@ format = "🕙 $time($style) "
 style = "bright-white"
 disabled = true
 
-[username]
-style_user = "bold green"
-show_always = false
