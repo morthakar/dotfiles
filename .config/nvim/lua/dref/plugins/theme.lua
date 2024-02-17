@@ -1,4 +1,4 @@
-local theme = "gruvbox"
+local theme = "onedark"
 
 if theme == "onedark" then
 	local ok, onedark = pcall(require, "onedark")
@@ -6,7 +6,7 @@ if theme == "onedark" then
 		return
 	end
 
-	onedark.setup { style = 'warmer' } -- Options: dark, darker, cool, deep, warm, warmer, light
+	onedark.setup { style = 'warm' } -- Options: dark, darker, cool, deep, warm, warmer, light
 	onedark.load()
 end
 
@@ -18,6 +18,6 @@ if theme == "gruvbox" then
 end
 
 if theme == "tokyonight" then
-	vim.g.tokyonight_style = "night"
+	theme = "tokyonight-night"
 	vim.cmd("colorscheme " .. theme)
 end

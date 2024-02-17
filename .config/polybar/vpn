@@ -1,0 +1,62 @@
+#!/bin/bash 
+
+function is_connected() {
+	if [[ -n "$(nordvpn status | awk -F: 'NR==2{ print $2 }')" ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+	#echo "${status//[$'\r']}" | awk 1 ORS=' ' | sed -e 's/-  -  //'
+	#
+	#echo "${status//[$'\r']}" | sed -e 's/-  -  //'
+
+function connect(){
+	nordvpn c
+	while [[ -z "$(nordvpn status | awk -F: 'NR==2')" ]]; do
+		sleep 1
+	done
+
+	local status="$(nordvpn status)"
+	dunstify "NordVPN" "$(echo "${status//[$'\r']}" | sed -e 's/-  -  //')"
+	nordvpn s killswitch 1
+}
+
+function disconnect(){
+	nordvpn d
+	nordvpn s killswitch 0
+}
+
+function toggle(){
+	if is_connected; then
+		disconnect
+	else
+		connect
+	fi
+}
+
+function status(){
+	if is_connected; then
+		echo ""
+	else
+		echo ""
+	fi
+}
+
+function update_status(){
+	if is_connected; then
+		local status="$(nordvpn status)"
+		dunstify "NordVPN" "$(echo "${status//[$'\r']}" | sed -e 's/-  -  //')"
+	else
+		dunstctl history-pop
+	fi
+}
+
+if "$1" == "status"; then
+	status
+elif "$1" == "toggle"; then
+	toggle
+elif "$1" == "update_status"; then
+	update_status
+fi

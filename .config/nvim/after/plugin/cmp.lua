@@ -13,7 +13,6 @@ if not has_luasnip then
 	return
 end
 
-
 local source_mapping = {
 	youtube = "[Suck it YT]",
 	buffer = "[Buffer]",
@@ -50,11 +49,9 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
-		{ name = "youtube" },
 	},
 })
 

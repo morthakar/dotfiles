@@ -1,125 +1,62 @@
-local has_autocmd, autocmd = pcall(require, "dref.lsp.autocmd")
-if not has_autocmd then
-	return
-end
+local servers = require('dref.lsp.servers')
+local autocmd = servers.get_autocmd()
 
-local filetype_attach = setmetatable({
+servers.attachFiletypeOpt({
 	go = function()
-		autocmd.format()
+		autocmd.format_on_save()
 		autocmd.org_imports()
 		autocmd.remove_space()
 	end,
-
 	lua = function()
-		autocmd.format()
+		autocmd.format_on_save()
 		autocmd.remove_space()
 	end,
-
 	rust = function()
-		autocmd.format()
+		autocmd.format_on_save()
+	end,
+	vlang = function()
+		autocmd.format_on_save()
+	end,
+	python = function()
+		autocmd.format_on_save()
+	end,
+	svelte = function()
+		autocmd.format_on_save()
+	end,
+	html = function()
+		autocmd.format_on_save()
 	end
 
-}, {
-	__index = function()
-		return function() end
-	end,
 })
 
-local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-local on_attach = function(client, bufnr)
-	-- Set autocommands conditional on server_capabilities
-	if client.server_capabilities.documentHighlightProvider then
-		autocmd.document_highlight()
-		autocmd.document_highlight_clear()
-	end
-
-	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-	vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-	vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-	vim.keymap.set('v', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-	vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, bufopts)
-	vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-
-	local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-
-	-- Attach any filetype specific options to the client
-	filetype_attach[filetype]()
-
-end
-
-local has_lsp, lspconfig = pcall(require, 'lspconfig')
-if not has_lsp then
-	return
-end
-
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-local flags = { debounce_text_changes = 200 }
-
-lspconfig.gopls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	flags = flags,
-}
-
---local sumneko_root_path = "/usr/lib/lua-language-server"
---local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-
-lspconfig.sumneko_lua.setup {
-	--cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.prettier,
+		null_ls.builtins.diagnostics.mypy,
+		null_ls.builtins.diagnostics.ruff,
 	},
-	on_attach = on_attach,
-	capabilities = capabilities,
-	flags = flags,
-}
+})
 
-lspconfig["rust_analyzer"].setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
+local rt = require("rust-tools").setup(
+	{
+		server = {
+			on_attach = servers.on_attach },
+	}
+)
 
-local has_symbols, symbols = pcall(require, "symbols-outline")
-if not has_symbols then
-	return
-end
+servers.setup({
+	html = {},
+	svelte = {},
+	pyright = {},
+	gopls = {},
+	lua_ls = {},
+})
 
-symbols.setup({
+
+require("symbols-outline").setup({
 	highlight_hovered_item = true,
 	show_guides = true,
 })

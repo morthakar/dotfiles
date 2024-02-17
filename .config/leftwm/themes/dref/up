@@ -27,9 +27,11 @@ monitors=($(polybar -m | sed 's/:.*//'))
 polybarpath="$DOTFILES"/.config/polybar
 polybarcfg="$DOTFILES/.config/polybar/polybar.ini"
 barname=("main0" "main1")
+bottombarname=("bottom1")
 
 for i in "${!monitors[@]}"; do
 	# used to set bar and workspace.
 	polybar="$polybarpath" monitor="${monitors[$i]}" index="$i" \
 	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
+	polybar -c $polybarcfg "${bottombarname[$i]}" &2> /dev/null
 done

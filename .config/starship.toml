@@ -1,5 +1,10 @@
+# Use custom format
+format = """
+[╭─\\(](bold black)$username[💀](bold white)$hostname[\\)─](bold black)$directory $all
+[╰─](bold black)$character"""
+
 # Don't print a new line at the start of the prompt
-add_newline = false
+add_newline = true
 
 # Make prompt a single line instead of two lines
 [line_break]
@@ -7,13 +12,28 @@ disabled = true
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]                            # The name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+#success_symbol = "[🎼💀💣🧨🧧📜🪙🪛🚬💢](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+success_symbol = "[\\$](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+
+[username]
+style_user = "bold bright-yellow underline"
+style_root = "red bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+style = "bold bright-yellow underline"
+ssh_only = false
+format = "[$hostname]($style)"
+trim_at = "-"
+disabled = false
 
 [directory]
-format="[$path]($style)[$read_only]($read_only_style) "
-style="bold blue"
-read_only = " "
-read_only_style="red"
+format="[$read_only]($read_only_style)[\\[](bold black)[$path]($style)[\\]](bold black)"
+style="blue bold"
+read_only = "[]"
+read_only_style="red bold"
 truncation_symbol=""
 truncation_length= 10
 truncate_to_repo = false
@@ -21,20 +41,8 @@ truncate_to_repo = false
 repo_root_format="[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 home_symbol="~"
 
-[username]
-style_user = "white bold"
-style_root = "black bold"
-format = "[$user]($style) "
-disabled = false
-show_always = true
-
 [aws]
 symbol = " "
-
-[battery]
-full_symbol = ""
-charging_symbol = ""
-discharging_symbol = ""
 
 [conda]
 symbol = " "
@@ -66,12 +74,6 @@ symbol = " "
 [java]
 symbol = " "
 
-[julia]
-symbol = " "
-
-[memory_usage]
-symbol = " "
-
 [nim]
 symbol = " "
 
@@ -84,16 +86,9 @@ symbol = " "
 [package]
 symbol = " "
 
-[perl]
-symbol = " "
-
-[php]
-symbol = " "
-
 [python]
 symbol = " "
 format = "[$symbol$version]($style) "
-style = "bold green"
 
 [ruby]
 symbol = " "
@@ -104,31 +99,9 @@ symbol = " "
 [swift]
 symbol = "ﯣ "
 
-
 [git_commit]
 commit_hash_length = 8
 style = "bold white"
-
-[git_status]
-conflicted = "⚔️ "
-#ahead = "🏎️ 💨×${count}"
-#behind = "🐢×${count}"
-#diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-#untracked = "🛤️  ×${count}"
-#stashed = "📦 "
-#modified = "📝×${count}"
-#staged = "🗃️ ×${count}"
-#renamed = "📛×${count}"
-#deleted = "🗑️ ×${count}"
-style = "bright-white"
-#format = "$all_status $ahead_behind"
-
-[hostname]
-ssh_only = false
-format = "<[$hostname]($style)>"
-trim_at = "-"
-style = "bold dimmed white"
-disabled = true
 
 [time]
 time_format = "%T"

@@ -1,4 +1,5 @@
 local M = {}
+local augroup_format = vim.api.nvim_create_augroup("my_lsp", { clear = true })
 
 local function org_imports(wait_ms)
 	local params = vim.lsp.util.make_range_params()
@@ -15,14 +16,12 @@ local function org_imports(wait_ms)
 	end
 end
 
-local augroup_format = vim.api.nvim_create_augroup("my_lsp", { clear = true })
-
-M.format = function()
+M.format_on_save = function()
 	vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		buffer = 0,
 		callback = function()
-			vim.lsp.buf.formatting_sync()
+			vim.lsp.buf.format()
 		end,
 	})
 end

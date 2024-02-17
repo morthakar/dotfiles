@@ -1,0 +1,7 @@
+go install github.com/OJ/gobuster/v3@latest
+go install github.com/ffuf/ffuf/v2@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install -v github.com/OWASP/Amass/v3/...@master
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
