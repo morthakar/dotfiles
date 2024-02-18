@@ -5,7 +5,7 @@ end
 
 treesitter.setup {
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+	ensure_installed = { 'go', 'lua', 'python', 'rust', 'typescript' },
 
 	highlight = { enable = true },
 	indent = { enable = true },
