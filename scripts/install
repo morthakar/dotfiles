@@ -13,7 +13,7 @@ function create_all_links(){
 # Create's the symbolic link setting the destination.
 function create_link(){
 	local src="$(dirname $1)"
-	if [[ "$src" == "$DOTFILES/config"  ]]; then
+	if [[ "$src" == "$DOTFILES/.config"  ]]; then
 		ln -sv "$1" "$HOME/.config"
 	elif [[ "$src" == "$DOTFILES/home" ]]; then
 		ln -sv "$1" "$HOME"
