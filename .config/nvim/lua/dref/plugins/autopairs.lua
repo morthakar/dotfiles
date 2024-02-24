@@ -1,19 +1,14 @@
--- Setup nvim-cmp.
-local ok, autopairs = pcall(require, "nvim-autopairs")
-if not ok then
-	return
-end
+return {
+		'windwp/nvim-autopairs',
+		event = "InsertEnter",
+		opts = {}, -- this is equalent to setup({}) function
+		config = function()
+			require("nvim-autopairs").setup({})
 
-autopairs.setup {}
+			-- Setup nvim-cmp.
+			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+			local cmp = require("cmp")
+			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+		end
+	}
 
-local has_cmp_autopairs, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-if not has_cmp_autopairs then
-	return
-end
-
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-	return
-end
-
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })

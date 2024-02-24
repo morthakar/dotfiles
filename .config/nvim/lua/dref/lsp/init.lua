@@ -30,33 +30,11 @@ servers.attachFiletypeOpt({
 })
 
 
---local null_ls = require("null-ls")
---null_ls.setup({
---	sources = {
---		null_ls.builtins.formatting.black,
---		null_ls.builtins.formatting.prettier,
---		null_ls.builtins.diagnostics.mypy,
---		null_ls.builtins.diagnostics.ruff,
---	},
---})
-
---local rt = require("rust-tools").setup(
---	{
---		server = {
---			on_attach = servers.on_attach },
---	}
---)
-
 servers.setup({
 	html = {},
 	svelte = {},
 	pyright = {},
 	gopls = {},
 	lua_ls = {},
+	rust_analyzer = {},
 })
-
-
---require("symbols-outline").setup({
---	highlight_hovered_item = true,
---	show_guides = true,
---})

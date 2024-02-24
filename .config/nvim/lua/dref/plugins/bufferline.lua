@@ -1,6 +1,6 @@
-local ok, bufferline = pcall(require, "bufferline")
-if not ok then
-	return
-end
-
-require("bufferline").setup{}
+return {
+	"akinsho/bufferline.nvim",
+	config = function()
+		require("bufferline").setup({})
+	end
+}
