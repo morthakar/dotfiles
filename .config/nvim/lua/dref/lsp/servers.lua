@@ -1,7 +1,7 @@
 local M = {}
 local set_key = require('dref.utils.keymap')
 local autocmd = require('dref.lsp.autocmd')
-local lspconfig = require('lspconfig')
+local config = require('lspconfig')
 
 function M.get_autocmd()
 	return autocmd
@@ -55,14 +55,15 @@ end
 
 
 -- Add additional capabilities supported by nvim-cmp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.on_attach = on_attach
 
 M.setup = function(servers)
 	for server, opts in pairs(servers) do
-		lspconfig[server].setup {
+		config[server].setup {
 			opts,
 			on_attach = on_attach,
 			capabilities = capabilities,
@@ -76,7 +77,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-lspconfig.lua_ls.setup {
+config.lua_ls.setup {
 	settings = {
 		Lua = {
 			runtime = {

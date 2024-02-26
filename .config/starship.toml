@@ -15,6 +15,12 @@ disabled = true
 #success_symbol = "[🎼💀💣🧨🧧📜🪙🪛🚬💢](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
 success_symbol = "[\\$](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
 
+[git_status]
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+
+
 [username]
 style_user = "bold bright-yellow underline"
 style_root = "red bold"
@@ -40,68 +46,6 @@ truncate_to_repo = false
 #repo_root_style="($style)"
 repo_root_format="[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 home_symbol="~"
-
-[aws]
-symbol = " "
-
-[conda]
-symbol = " "
-
-[dart]
-symbol = " "
-
-
-[docker_context]
-format = "via [🐋 $context](blue bold)"
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[git_branch]
-format = " [$symbol$branch]($style) "
-style = "bold yellow"
-symbol = " "
-
-[golang]
-symbol = " "
-
-[hg_branch]
-symbol = " "
-
-[java]
-symbol = " "
-
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
-
-[nodejs]
-symbol = " "
-
-[package]
-symbol = " "
-
-[python]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[ruby]
-symbol = " "
-
-[rust]
-symbol = " "
-
-[swift]
-symbol = "ﯣ "
-
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
 
 [time]
 time_format = "%T"

@@ -1,5 +1,5 @@
 local M = {}
-local augroup_format = vim.api.nvim_create_augroup("my_lsp", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("lsp_custom_autocmds", { clear = true })
 
 local function org_imports(wait_ms)
 	local params = vim.lsp.util.make_range_params()

@@ -1,0 +1,14 @@
+vim.o.backup = false
+vim.o.cursorline = true
+vim.o.hidden = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
+vim.o.mouse = 'a'
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.signcolumn = "yes"
+vim.o.smartindent = true
+vim.o.swapfile = false
+vim.o.termguicolors = true
+vim.o.undofile = true
+vim.o.updatetime = 50
