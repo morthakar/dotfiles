@@ -20,7 +20,7 @@ leftwm command "LoadTheme $MAINPATH/theme.ron"
 
 # Set background
 if [[ -x "$(command -v feh)" ]]; then
-  feh --bg-fill "$MAINPATH"/background.png
+  feh --bg-fill "$HOME/Images/wallhaven-jxlwpm_1920x1080.png"
 fi
 
 monitors=($(polybar -m | sed 's/:.*//'))

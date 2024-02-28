@@ -1,118 +1,107 @@
 return {
-	-- LSP Configuration & Plugins
-	'neovim/nvim-lspconfig',
+	"neovim/nvim-lspconfig",
 	dependencies = {
-		-- Automatically install LSPs to stdpath for neovim
-		{ 'williamboman/mason.nvim', config = true },
-		'williamboman/mason-lspconfig.nvim',
+		-- Automatically install LSPs and related tools to stdpath for neovim
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-		{ 'j-hui/fidget.nvim',       opts = {} },
-
-		'folke/neodev.nvim',
-
+		-- Useful status updates for LSP.
+		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+			callback = function(event)
+				local map = function(keys, func, desc)
+					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+				end
+
+				--  To jump back, press <C-T>.
+				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+				map("<leader>K", vim.lsp.buf.hover, "Hover Documentation")
+				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+				local client = vim.lsp.get_client_by_id(event.data.client_id)
+				if client and client.server_capabilities.documentHighlightProvider then
+					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+						buffer = event.buf,
+						callback = vim.lsp.buf.document_highlight,
+					})
+
+					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+						buffer = event.buf,
+						callback = vim.lsp.buf.clear_references,
+					})
+				end
+			end,
+		})
+
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
+		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+		--  Add any additional override configuration in the following tables. Available keys are:
+		--  - cmd (table): Override the default command used to start the server
+		--  - filetypes (table): Override the default list of associated filetypes for the server
+		--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
+		--  - settings (table): Override the default settings passed when initializing the server.
+		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
+			rust_analyzer = {},
+			--
 
 			lua_ls = {
-				Lua = {
-					workspace = { checkThirdParty = false },
-					telemetry = { enable = false },
-					-- diagnostics = { disable = { 'missing-fields' } },
+				-- cmd = {...},
+				-- filetypes { ...},
+				-- capabilities = {},
+				settings = {
+					Lua = {
+						runtime = { version = "LuaJIT" },
+						workspace = {
+							checkThirdParty = false,
+							-- Tells lua_ls where to find all the Lua files that you have loaded
+							-- for your neovim configuration.
+							library = {
+								"${3rd}/luv/library",
+								unpack(vim.api.nvim_get_runtime_file("", true)),
+							},
+							-- If lua_ls is really slow on your computer, you can try this instead:
+							-- library = { vim.env.VIMRUNTIME },
+						},
+						-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+						-- diagnostics = { disable = { 'missing-fields' } },
+					},
 				},
 			},
 		}
 
-		require('mason').setup()
-		require('mason-lspconfig').setup()
+		require("mason").setup()
 
-		local autocmd = require('dref.lsp.autocmd')
-
-		local set_filetypeopt = function(opts)
-			local table = setmetatable({}, {
-				__index = function()
-					return function()
-					end
-				end,
-			})
-
-			-- assign the provided callbacks to the respective file types in the filetype_attach table
-			for filetype, callback in pairs(opts) do
-				table[filetype] = function()
-					callback()
-				end
-			end
-
-			return table
-		end
-
-		local filetype_attach = set_filetypeopt({
-			go = function()
-				autocmd.format_on_save()
-				autocmd.org_imports()
-				autocmd.remove_space()
-			end,
-			lua = function()
-				autocmd.format_on_save()
-				autocmd.remove_space()
-			end,
-			rust = function()
-				autocmd.format_on_save()
-			end,
-
+		local ensure_installed = vim.tbl_keys(servers or {})
+		vim.list_extend(ensure_installed, {
+			"stylua", -- Used to format lua code
 		})
+		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-		-- ensure the servers above are installed
-		local mason_lspconfig = require('mason-lspconfig')
-
-		mason_lspconfig.setup {
-			ensure_installed = vim.tbl_keys(servers),
-		}
-
-		mason_lspconfig.setup_handlers {
-			function(server_name)
-				require('lspconfig')[server_name].setup {
-					capabilities = capabilities,
-					on_attach = function(_, bufnr)
-						local nmap = require("dref.utils.keymap").nmap
-						local vmap = require("dref.utils.keymap").vmap
-						local imap = require("dref.utils.keymap").imap
-
-
-						nmap('gd', vim.lsp.buf.declaration, "[g]oto [d]eclaration")
-						nmap('gd', vim.lsp.buf.definition, "")
-						nmap('gi', vim.lsp.buf.implementation, "")
-						nmap('gr', vim.lsp.buf.references, "")
-						nmap('<c-h>', vim.lsp.buf.signature_help, "")
-						imap('<c-h>', vim.lsp.buf.signature_help, "")
-						vmap('<c-h>', vim.lsp.buf.signature_help, "")
-						nmap('<leader>h', vim.lsp.buf.hover, "")
-						nmap('<leader>d', vim.lsp.buf.type_definition, "")
-						nmap('<leader>rn', vim.lsp.buf.rename, "")
-						nmap('<leader>ca', vim.lsp.buf.code_action, "")
-
-						-- enable completion triggered by <c-x><c-o>
-						vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-						local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-						filetype_attach[filetype]()
-					end,
-
-					settings = servers[server_name],
-					filetypes = (servers[server_name] or {}).filetypes,
-				}
-			end,
-		}
-
-		-- setup neovim lua configuration
-		require('neodev').setup()
-
-		-- setup cmp
-		require("cmp").setup()
-	end
-
+		require("mason-lspconfig").setup({
+			handlers = {
+				function(server_name)
+					local server = servers[server_name] or {}
+					require("lspconfig")[server_name].setup({
+						cmd = server.cmd,
+						settings = server.settings,
+						filetypes = server.filetypes,
+						capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {}),
+					})
+				end,
+			},
+		})
+	end,
 }
