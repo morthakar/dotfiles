@@ -1,6 +1,6 @@
 # Use custom format
 format = """
-[╭─\\(](bold black)$username[💀](bold white)$hostname[\\)─](bold black)$directory $all
+[╭─\\(](bold black)$username[\\[](bold cyan)[💀](bold cyan)[\\]](bold cyan)$hostname[\\)─](bold black)$directory $all
 [╰─](bold black)$character"""
 
 # Don't print a new line at the start of the prompt
@@ -41,14 +41,14 @@ format = '([\[$all_status$ahead_behind\]]($style) )'
 #deleted = '🗑 '
 
 [username]
-style_user = "bold bright-yellow underline"
+style_user = "bold red underline"
 style_root = "red bold"
 format = "[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
-style = "bold bright-yellow underline"
+style = "bold blue underline"
 ssh_only = false
 format = "[$hostname]($style)"
 trim_at = "-"
