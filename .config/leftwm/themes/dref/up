@@ -10,9 +10,9 @@ if [ -f "/tmp/leftwm-theme-down" ]; then
 fi
 ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
 
-# Boot picom or compton if it exists
+# Start picom 
 if [[ -x "$(command -v picom)" ]]; then
-  picom --experimental-backends > /dev/null &
+  picom --config "$DOTFILES/.config/picom.conf" > /dev/null &
 fi
 
 # Set the theme.toml config
@@ -20,7 +20,7 @@ leftwm command "LoadTheme $MAINPATH/theme.ron"
 
 # Set background
 if [[ -x "$(command -v feh)" ]]; then
-  feh --bg-fill "$HOME/Images/wallhaven-jxlwpm_1920x1080.png"
+  feh --bg-fill "$HOME/Images/wallhaven-1poo61_1920x1080.png"
 fi
 
 monitors=($(polybar -m | sed 's/:.*//'))
@@ -35,3 +35,15 @@ for i in "${!monitors[@]}"; do
 	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
 	polybar -c $polybarcfg "${bottombarname[$i]}" &2> /dev/null
 done
+
+# start eww daemon
+#eww daemon &
+#
+#sleep 1
+#index=0
+#sizes=( $(leftwm-state -q -n -t $SCRIPTPATH/sizes.liquid | sed -r '/^\s*$/d' ) )
+#for size in "${sizes[@]}"
+#do
+#    eww open bar$index
+#  let index=index+1
+#done

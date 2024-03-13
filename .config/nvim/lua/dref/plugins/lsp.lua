@@ -16,6 +16,9 @@ return {
 				local map = function(keys, func, desc)
 					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
+				local imap = function(keys, func, desc)
+					vim.keymap.set("i", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+				end
 
 				--  To jump back, press <C-T>.
 				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
@@ -26,7 +29,8 @@ return {
 				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-				map("<leader>K", vim.lsp.buf.hover, "Hover Documentation")
+				map("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
+				imap("<C-k>", vim.lsp.buf.signature_help, "Hover Documentation")
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -56,7 +60,7 @@ return {
 		local servers = {
 			rust_analyzer = {},
 			zls = {},
-
+			gopls = {},
 			lua_ls = {
 				-- cmd = {...},
 				-- filetypes { ...},

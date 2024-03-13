@@ -15,12 +15,7 @@
         (output: "HDMI-0", x: 0, y: 0, height: 1080, width: 1920),
         (output: "DP-0", x: 1920, y: 0, height: 900, width: 1600),
     ],
-    tags: [
-        "\u{e62b}",
-        "\u{f303}",
-        "\u{f1b3}",
-        "\u{f305}",
-    ],
+    tags: ["","","",""],
     max_window_width: None,
     layouts: [
         "MainAndVertStack",
@@ -46,7 +41,7 @@
     keybind: [
         (command: Execute, value: "alacritty", modifier: ["modkey"], key: "Return"),
         (command: Execute, value: "brave", modifier: ["modkey"], key: "b"),
-        (command: Execute, value: "dmenu_run", modifier: ["modkey"], key: "p"),
+        (command: Execute, value: "rofi -show drun", modifier: ["modkey"], key: "p"),
         (command: Execute, value: "loginctl kill-session $XDG_SESSION_ID", modifier: ["modkey", "Shift"], key: "x"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: HardReload, value: "", modifier: ["modkey", "Control"], key: "r"),
