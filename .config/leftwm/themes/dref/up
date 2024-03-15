@@ -1,6 +1,6 @@
 #!/bin/sh
 export MAINPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-export THEME="gruvbox"
+export THEME="rose-pine"
 export HWMON="$(fd . /sys/devices/platform | rg temp1_input)"
 
 # Down the last running theme
