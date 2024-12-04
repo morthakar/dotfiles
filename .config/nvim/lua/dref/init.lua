@@ -1,4 +1,8 @@
 ---@diagnostic disable: inject-field
+----- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -38,21 +42,20 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- NOTE: Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+-- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
---vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+	vim.snippet.jump(-1)
+end, { buffer = true })
 
 -- NOTE: Keys remap
 vim.keymap.set("n", "K", ":m .-2<CR>==", { desc = "Move line up" })
@@ -68,6 +71,12 @@ vim.keymap.set("n", "<left>", "<NOP>")
 vim.keymap.set("n", "<right>", "<NOP>")
 vim.keymap.set("n", "<up>", "<NOP>")
 vim.keymap.set("n", "<down>", "<NOP>")
+
+-- Set NvimTree Toggle
+vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<cr>", { desc = "NvimTreeToggle" })
+
+-- Set BufferLineCloseOthers
+vim.keymap.set("n", "<C-q>", "<cmd>NvimTreeToggle<cr>", { desc = "NvimTreeToggle" })
 
 --  NOTE: Window navigation
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -96,13 +105,13 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 
 	-- Detect tabstop and shiftwidth automatically
-	"tpope/vim-sleuth",
+	-- "tpope/vim-sleuth",
 
 	-- "gc" to comment visual regions/lines
-	{ "numToStr/Comment.nvim", opts = {} },
+	-- { "numToStr/Comment.nvim", opts = {} },
 
 	-- Highlight todo, notes, etc in comments
-	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = { signs = false } },
+	-- { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = { signs = false } },
 
 	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
 	{ import = "dref.plugins" },

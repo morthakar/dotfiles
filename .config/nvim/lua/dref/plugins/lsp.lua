@@ -32,6 +32,33 @@ return {
 				map("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
 				imap("<C-k>", vim.lsp.buf.signature_help, "Hover Documentation")
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+				map("g[", function()
+					vim.diagnostic.goto_next()
+				end, "[G]oto Next Error")
+				map("g]", function()
+					vim.diagnostic.goto_prev()
+				end, "[G]oto Prev Error")
+
+				local filetype = vim.api.nvim_buf_get_option(event.buf, "filetype")
+				if filetype == "go" then
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = event.buf,
+						callback = function()
+							local params = vim.lsp.util.make_range_params()
+							params.context = { only = { "source.organizeImports" } }
+							local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+							for cid, res in pairs(result or {}) do
+								for _, r in pairs(res.result or {}) do
+									if r.edit then
+										local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+										vim.lsp.util.apply_workspace_edit(r.edit, enc)
+									end
+								end
+							end
+							vim.lsp.buf.format({ async = false })
+						end,
+					})
+				end
 
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.server_capabilities.documentHighlightProvider then
@@ -59,8 +86,20 @@ return {
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
 			rust_analyzer = {},
-			zls = {},
-			gopls = {},
+			zls = { cmd = { "/home/free/.local/repos/zls/zig-out/bin/zls" } },
+			gopls = {
+				{
+					settings = {
+						gopls = {
+							analyses = {
+								unusedparams = true,
+							},
+							staticcheck = true,
+							gofumpt = true,
+						},
+					},
+				},
+			},
 			lua_ls = {
 				-- cmd = {...},
 				-- filetypes { ...},

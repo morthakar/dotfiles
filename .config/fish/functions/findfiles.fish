@@ -1,10 +1,18 @@
-function findfiles
-	set -f dir $HOME
-	set -f search (fd . "$dir" -H | fzf --prompt "$dir " --header "CTRL-d: Dir | CTRL-f: Files | CTRL-s: System" --bind "ctrl-d:change-prompt(Dir > )+reload(fd . $dir -t d -H)" --bind "ctrl-f:change-prompt(Files > )+reload(fd . $dir -t f -H)" --bind "ctrl-s:change-prompt(System > )+reload(fd . / -H)")
+function findfiles --argument dir
+	set -q dir[1]; or set dir "$HOME"
+	set -f result (fd . "$dir" -H -t d | \
+	fzf --prompt "result [$dir]\$" \
+	--header "F1: Dir | F2: Files | F3: System | F4: Code" \
+	--bind "f1:change-prompt(Dir > )+reload(fd . $dir -t d)" \
+	--bind "f2:change-prompt(Files > )+reload(fd . $dir -t f -H)" \
+	--bind "f3:change-prompt(System > )+reload(fd . / -H)" \
+	--bind "f4:change-prompt(Code > )+reload(fd . $HOME/code -t d -H)")
 
-	if test -d "$search"
-		cd "$search"
-	else if test -f "$search"
-		"$EDITOR" "$search"
+	if test -d "$result"
+		cd "$result"
+	else if test -f "$result"
+		"$EDITOR" "$result"
 	end
 end
+
+
