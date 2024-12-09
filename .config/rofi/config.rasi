@@ -1,8 +1,4 @@
 configuration {
-  modes: [ drun ];
- /* combi-modes: [ window, drun, run ];*/
+
 }
 
-@theme "dmenu"
- 
-/* Insert theme modifications after this */

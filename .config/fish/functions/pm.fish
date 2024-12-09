@@ -2,7 +2,7 @@ function pm
     pacman -Qq | \
 	fzf --header 'All(F1) Installed(F2) AUR(F3) Dependecies(F4)' \
 	--prompt 'All> ' \
-	--height '55%' \
+	--height '100%' \
 	--preview 'pacman -Qi {}'  \
 	--bind 'f1:change-prompt(All> )+reload(pacman -Qq)' \
 	--bind 'f2:change-prompt(Installed> )+reload(pacman -Qeq)' \

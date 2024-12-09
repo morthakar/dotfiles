@@ -1,4 +1,3 @@
-
 [colors]
 draw_bold_text_with_bright_colors = true
 
@@ -128,7 +127,7 @@ x = 6
 y = 6
 
 [general]
-import = ["~/.config/alacritty/themes/themes/catppuccin_macchiato.toml"]
+import = ["~/.config/alacritty/themes/themes/horizon-dark.toml"]
 
 [terminal]
-shell = { program = "/usr/bin/tmux", args = ["new","-A","-s","alacritty"] }
+#shell = { program = "/usr/bin/tmux", args = ["new","-A","-s","alacritty"] }

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-if [[ ! "$(ping -c 1 9.9.9.9)" ]]; then
-	echo "Internet Problem "
-fi

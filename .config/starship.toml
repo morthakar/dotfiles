@@ -1,7 +1,11 @@
 # Use custom format
 format = """
-[╭─\\(](bold black)$username[\\[](bold cyan)[💀](bold cyan)[\\]](bold cyan)$hostname[\\)─](bold black)$directory $all
+[╭─](bold black)$username$hostname$directory $all
 [╰─](bold black)$character"""
+
+#format = """
+#[╭─\\(](bold black)$username[\\[](bold cyan)[💀](bold cyan)[\\]](bold cyan)$hostname[\\)─](bold black)$directory $all
+#[╰─](bold black)$character"""
 
 # Don't print a new line at the start of the prompt
 add_newline = true
@@ -10,10 +14,49 @@ add_newline = true
 [line_break]
 disabled = true
 
+# ~/.config/starship.toml
+
+[cmd_duration]
+min_time = 500
+format = '[$duration](bold yellow)'
+
+[sudo]
+style = 'bold green'
+symbol = '👩‍💻 '
+disabled = true
+
 # Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
-#success_symbol = "[󰉐🎼💀💣🧨🧧📜🪙🪛🚬💢](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-success_symbol = "[\\$](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+[character]
+#󰉐 🎼💀💣🧨🧧📜🪙🪛🐞⚡🪲🍺🍻🚬💢㊙️👹
+success_symbol = "[🎼](bold green)"
+error_symbol = "[💢](bold red)"
+
+
+[username]
+style_user = "bold yellow"
+style_root = "red bold"
+format = "[\\(](bold black)[$user]($style)[🧨](bold red)"
+disabled = false
+show_always = true
+
+[hostname]
+style = "bold yellow"
+ssh_only = false
+format = '[$hostname]($style)[\)-](bold black)'
+trim_at = "-"
+disabled = false
+
+[directory]
+format="[$read_only]($read_only_style)[\\[](bold black)[$path]($style)[\\]](bold black)"
+style="bold blue"
+read_only = " 󰉐 "
+read_only_style="red bold"
+truncation_symbol=""
+truncation_length= 10
+truncate_to_repo = false
+#repo_root_style="($style)"
+repo_root_format="[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+home_symbol="~"
 
 [git_branch]
 always_show_remote = false
@@ -28,43 +71,6 @@ disabled = false
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-#conflicted = '🏳'
-#ahead = '🏎💨'
-#behind = '😰'
-#diverged = '😵'
-#up_to_date = '✓'
-#untracked = '🤷 '
-#stashed = '📦'
-#modified = ' 📝 '
-#staged = '[++\($count\)](green)'
-#renamed = '👅'
-#deleted = '🗑 '
-
-[username]
-style_user = "bold red underline"
-style_root = "red bold"
-format = "[$user]($style)"
-disabled = false
-show_always = true
-
-[hostname]
-style = "bold blue underline"
-ssh_only = false
-format = "[$hostname]($style)"
-trim_at = "-"
-disabled = false
-
-[directory]
-format="[$read_only]($read_only_style)[\\[](bold black)[$path]($style)[\\]](bold black)"
-style="blue bold"
-read_only = " 󰉐 "
-read_only_style="red bold"
-truncation_symbol=""
-truncation_length= 10
-truncate_to_repo = false
-#repo_root_style="($style)"
-repo_root_format="[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
-home_symbol="~"
 
 [time]
 time_format = "%T"

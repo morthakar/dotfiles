@@ -23,6 +23,7 @@ mkdir -p "$HOME"/.local/share/keyrings
 
 export DOTFILES="$HOME/dotfiles"
 
-xrandr --output HDMI-0 --primary --mode 1920x1080 --output DP-0 --mode 1600x900 --right-of HDMI-0
+#xrandr --output HDMI-0 --primary --mode 1920x1080 --output DP-0 --mode 1600x900 --right-of HDMI-0
+#xrandr xrandr --output DP-0 --mode 1600x900 --pos 1920x0 --output HDMI-0 --mode 1920x1080 --pos 0x0
 numlockx &
 exec leftwm
