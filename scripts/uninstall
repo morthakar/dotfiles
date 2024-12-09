@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [[ -x "$(command -v fd)"  ]]; then
-	echo "Removing symbolic links"
-	fd . "$HOME/.config" -t l -d 1 -x rm -v
-	fd . "$HOME" -d 1 -t l -H -x rm -v
-fi
-

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+CHECKUPDATES_DB="/tmp/updates-db-${UID}/"
+
+function create_db(){
+	local db="/var/lib/pacman/"
+
+	if [[ ! -d "$CHECKUPDATES_DB" ]]; then
+		mkdir -p "$CHECKUPDATES_DB"
+		ln -s "${db}/local" "$CHECKUPDATES_DB" &> /dev/null
+	fi
+
+}
+
+function sync_db(){
+	if ! fakeroot -- pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
+		echo "error: Cannot fetch updates with pacman"
+		exit 1
+	elif ! paru -Say --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
+		echo "error: Cannot fetch updates with paru"
+		exit 1
+	fi
+}
+
+function notify_dunst(){
+	local updates="$(pacman -Qu --dbpath $CHECKUPDATES_DB)"
+	local count="$(pacman -Qu --dbpath $CHECKUPDATES_DB | wc -l)"
+	if [[ $count > 0 ]]; then
+		dunstify "Update(s)" "$updates" -a "update" -r 755
+		echo $count "Updates(s)"
+	fi
+
+}
+
+function check_connection(){
+	while ! networkctl list | grep routable &> /dev/null; do
+		sleep 10
+	done
+}
+
+function check_update(){
+	check_connection
+	create_db
+	sync_db
+	notify_dunst
+}
+
+check_update
