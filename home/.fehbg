@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-fill '/home/free/Images/wallhaven-1poo61_1920x1080.png' 

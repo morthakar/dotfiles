@@ -1,122 +1,64 @@
-@import "default"
-
 * {
-	bg: #232136;
-	cur: #2a273f;
-	fgd: #e0def4;
-	cmt: #6e6a86;
-	cya: #9ccfd8;
-	grn: #3e8fb0;
-	ora: #ea9a97;
-	pur: #c4a7e7;
-	red: #eb6f92;
-	yel: #f6c177;
+    font:   "FiraCode NerdFont 12";
 
-	font: "Cartograph CF 12";
+    bg0:    #242424E6;
+    bg1:    #7E7E7E80;
+    bg2:    #0860f2E6;
 
-	foreground: @fgd;
-	background: @bg;
-	active-background: @grn;
-	urgent-background: @red;
+    fg0:    #DEDEDE;
+    fg1:    #FFFFFF;
+    fg2:    #DEDEDE80;
 
-	selected-background: @active-background;
-	selected-urgent-background: @urgent-background;
-	selected-active-background: @active-background;
-	separatorcolor: @active-background;
-	bordercolor: @ora;
+    background-color:   transparent;
+    text-color:         @fg0;
+
+    margin:     0;
+    padding:    0;
+    spacing:    0;
 }
 
 window {
-	anchor:     center;
-	width:      20%;
-	location:   center;
-	background-color: @background;
-	border-color:     @bordercolor;
-	border-radius:    6;
-	border:           2;
-	padding:          0;
-	children: [ mainbox ];
-}
-#mainbox {
-	border:  0;
-	padding: 0;
-	orientation: vertical;
-	spacing: 1px;
-	children: [ listview];
-}
-#listview {
-	expand: false;
-	dynamic: true;
-	fixed-height: false;
-	border:       0px 0px 0px 0px ;
-	border-color: @bordercolor;
-	spacing:      1%;
-	scrollbar:    false;
-	padding:      0px 0px 0px ;
-	children: [ element ] ;
-	layout: vertical;
-}
-#element {
-	expand: true;
-	padding: 0px ;
-	cursor:  pointer;
-	spacing: 0px ;
-	border:  0;
-	orientation: vertical;
-	children: [ element-text, textbox-dummy];
-}
-#textbox-dummy {
-	expand: true;
-	horizontal-align: 0;
-	font: "Fira Code NF 20";
-	content: "TEST";
-	text-color: @foregorund;
-}
-#element-text {
-	horizontal-align: 0.5;
-	font: "Fira Code NF 40";
-}
-#element.normal.normal {
-	background-color: @background;
-	text-color:       @foreground;
-}
-#element.normal.urgent {
-	background-color: @urgent-background;
-	text-color:       @urgent-foreground;
-}
-#element.normal.active {
-	background-color: @active-background;
-	text-color:       @background;
-}
-#element.selected.normal {
-	background-color: @selected-background;
-	text-color:       @foreground;
-}
-#element.selected.urgent {
-	background-color: @selected-urgent-background;
-	text-color:       @foreground;
-}
-#element.selected.active {
-	background-color: @selected-active-background;
-	text-color:       @background;
-}
-#element.alternate.normal {
-	background-color: @background;
-	text-color:       @foreground;
-}
-#element.alternate.urgent {
-	background-color: @urgent-background;
-	text-color:       @foreground;
-}
-#element.alternate.active {
-	background-color: @active-background;
-	text-color:       @foreground;
-}
-#scrollbar {
-	width:        2px ;
-	border:       0;
-	handle-width: 8px ;
-	padding:      0;
+    background-color:   @bg0;
+    location:       east;
+    width:          250;
+    border-radius:  8;
 }
 
+mainbox {
+	children: [ listview ];
+}
 
+listview {
+    columns:    1;
+    dynamic:	true;
+    fixed-height:   false;
+    border:         1px 0 0;
+    border-color:   @bg1;
+}
+
+element {
+    padding:            8px 16px;
+    spacing:            16px;
+    background-color:   transparent;
+}
+
+element normal active {
+    text-color: @bg2;
+}
+
+element alternate active {
+    text-color: @bg2;
+}
+
+element selected normal, element selected active {
+    background-color:   @bg2;
+    text-color:         @fg1;
+}
+
+element-icon {
+    size:   1em;
+}
+
+element-text {
+    text-color: inherit;
+}

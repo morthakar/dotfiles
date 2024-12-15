@@ -10,18 +10,8 @@ if [ -f "/tmp/leftwm-theme-down" ]; then
 fi
 ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
 
-# Start picom 
-if [[ -x "$(command -v picom)" ]]; then
-  picom --config "$DOTFILES/.config/picom.conf" > /dev/null &
-fi
-
 # Set the theme.toml config
 leftwm command "LoadTheme $MAINPATH/theme.ron"
-
-# Set background
-if [[ -x "$(command -v feh)" ]]; then
-  feh --bg-fill "$HOME/Images/wallhaven-1poo61_1920x1080.png"
-fi
 
 monitors=($(polybar -m | sed 's/:.*//'))
 polybarpath="$DOTFILES"/.config/polybar
@@ -33,7 +23,6 @@ for i in "${!monitors[@]}"; do
 	# used to set bar and workspace.
 	polybar="$polybarpath" monitor="${monitors[$i]}" index="$i" \
 	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
-	polybar -c $polybarcfg "${bottombarname[$i]}" &2> /dev/null
 done
 
 # start eww daemon

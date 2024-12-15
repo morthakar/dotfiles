@@ -1,4 +1,5 @@
-function up --wraps='paru -Syu && polybar-msg cmd restart' --description 'alias up=paru -Syu && polybar-msg cmd restart'
-  paru -Syu
-  polybar-msg cmd restart &> /dev/null
+function up --wraps='paru -Syu && polybar-msg cmd restart' --description 'alias up=paru'
+  paru -Syu &&
+  killall waybar &>/dev/null
+  hyprctl dispatch exec waybar
 end

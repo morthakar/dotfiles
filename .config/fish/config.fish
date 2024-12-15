@@ -1,8 +1,8 @@
-if status --is-login
-	if test -z "$DISPLAY" -a $XDG_VTNR = 1
-		exec startx --vt1 &> /dev/null
-	end
-end
+# if status --is-login
+# 	if test -z "$DISPLAY" -a $XDG_VTNR = 1
+# 		exec startx --vt1 &> /dev/null
+# 	end
+# end
 
 if status is-interactive
 	# Commands to run in interactive sessions can go here
@@ -10,3 +10,7 @@ if status is-interactive
 end
 
 starship init fish | source
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

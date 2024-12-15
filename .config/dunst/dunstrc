@@ -34,7 +34,7 @@
 
     # Offset from the origin
     # offset = 0x30
-    offset = 5x37
+    offset = (10,40)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -91,13 +91,13 @@
     frame_width = 1
 
     # Defines color of the frame around the notification window.
-    frame_color = "#e0def4"
+    frame_color = "#1e2030"
 
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
     # of size frame_width will be drawn around each notification instead.
     # Click events on gaps do not currently propagate to applications below.
-    gap_size = 0
+    gap_size = 5
 
     # Define a color for the separator.
     # possible values are:
@@ -246,7 +246,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 2
+    corner_radius = 3
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -262,7 +262,7 @@
     # layer = top
 
     # Set this to true to use X11 output on Wayland.
-    force_xwayland = false
+    force_xwayland = true
 
     ### Legacy
 
@@ -316,9 +316,9 @@
     default_icon = software-update-available-symbolic.symbolic
 
 [urgency_normal]
-    background = "#191724"
-    foreground = "#ebbcba"
-    frame_color = "#524f67"
+    background = "#181926"
+    foreground = "#8aadf4"
+    frame_color = "#24273a"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     default_icon = software-update-available-symbolic.symbolic

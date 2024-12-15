@@ -127,7 +127,7 @@ x = 6
 y = 6
 
 [general]
-import = ["~/.config/alacritty/themes/themes/horizon-dark.toml"]
+import = ["~/.config/alacritty/themes/themes/catppuccin_mocha.toml"]
 
 [terminal]
 #shell = { program = "/usr/bin/tmux", args = ["new","-A","-s","alacritty"] }
