@@ -31,13 +31,11 @@ return {
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 				map("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
 				imap("<C-k>", vim.lsp.buf.signature_help, "Hover Documentation")
+				map("<leader>e", vim.diagnostic.open_float, "Show diagnostic [E]rror messages")
+				map("<leader>q", vim.diagnostic.setloclist, "Open diagnostic [Q]uickfix list")
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-				map("g[", function()
-					vim.diagnostic.goto_next()
-				end, "[G]oto Next Error")
-				map("g]", function()
-					vim.diagnostic.goto_prev()
-				end, "[G]oto Prev Error")
+				map("g[", vim.diagnostic.goto_next, "[G]oto Next Error")
+				map("g]", vim.diagnostic.goto_prev, "[G]oto Prev Error")
 
 				local filetype = vim.api.nvim_buf_get_option(event.buf, "filetype")
 				if filetype == "go" then
@@ -86,7 +84,11 @@ return {
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
 			jqls = {},
-			rust_analyzer = {},
+			rust_analyzer = {
+				settings = {
+					["rust-analyzer"] = {},
+				},
+			},
 			zls = { cmd = { "/home/free/.local/repos/zls/zig-out/bin/zls" } },
 			gopls = {
 				{

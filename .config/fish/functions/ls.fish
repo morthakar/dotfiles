@@ -1,4 +1,4 @@
-function ls --wraps='exa -la' --wraps='exa -lag@H --icons --group-directories-first' --description 'alias ls=exa -lag@H --icons --group-directories-first'
+function ls --wraps='eza -la' --wraps='eza -lag@H --icons --group-directories-first' --description 'alias ls=exa -lag@H --icons --group-directories-first'
 	#command ls
-	exa -lag@H --icons --group-directories-first $argv; 
+	eza -lag@oH --icons --group-directories-first $argv; 
 end
