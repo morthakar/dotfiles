@@ -1,0 +1,32 @@
+{% assign black = '%{F#393552}' %}
+{% assign red = '%{F#cc241d}' %}
+{% assign pink = '%{F#eb6f92}' %}
+{% assign green = '%{F#3e8fb0}' %}
+{% assign yellow = '%{F#f3c177}' %}
+{% assign blue = '%{F#9ccfd8}' %}
+{% assign magenta = '%{F#c4a7e7}' %}
+{% assign cyan = '%{F#ea9a97}' %}
+{% assign white = '%{F#e0def4}' %}
+{% assign close = '%{F-}' %}
+
+{% for tag in workspace.tags %}
+{% if tag.mine %}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
+%{T2} {{ red }} {{tag.name}} {{ close }}
+%{A}
+{% elsif tag.visible  %}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
+%{T2} {{ black }} {{tag.name}} {{ close }}
+%{A}
+{% elsif tag.busy  %}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
+%{T2} {{ green }} {{tag.name}} {{ close }}
+%{A}
+{% else %}
+%{A1:leftwm command leftwm command "SendWorkspaceToTag {{workspace.index}} {{tag.index}}":}
+%{T2} {{ white }} {{tag.name}} {{ close }}
+%{A}
+{% endif %}
+{% endfor %}
+
+%{T0} {{ yellow }} {{ workspace.layout  }} {{ close }} %{T-}

@@ -1,8 +1,6 @@
-# if status --is-login
-# 	if test -z "$DISPLAY" -a $XDG_VTNR = 1
-# 		exec startx --vt1 &> /dev/null
-# 	end
-# end
+ if status --is-login
+	 #exec Hyprland &> /dev/null
+ end
 
 if status is-interactive
 	# Commands to run in interactive sessions can go here
@@ -11,6 +9,9 @@ end
 
 starship init fish | source
 
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
+ # Qt
+set --export QT_AUTO_SCREEN_SCALE_FACTOR 1
+set --export QT_QPA_PLATFORM wayland
+set --export QT_WAYLAND_DISABLE_WINDOWDECORATION 1
+set --export QT_QPA_PLATFORMTHEME qt5ct
+

@@ -1,0 +1,38 @@
+#!/bin/sh
+export MAINPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+export THEME="rose-pine"
+export HWMON="$(fd . /sys/devices/platform | rg temp1_input)"
+
+# Down the last running theme
+if [ -f "/tmp/leftwm-theme-down" ]; then
+    /tmp/leftwm-theme-down
+    rm /tmp/leftwm-theme-down
+fi
+ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
+
+# Set the theme.toml config
+leftwm command "LoadTheme $MAINPATH/theme.ron"
+
+monitors=($(polybar -m | sed 's/:.*//'))
+polybarpath="$DOTFILES"/.config/polybar
+polybarcfg="$DOTFILES/.config/polybar/polybar.ini"
+barname=("main0" "main1")
+bottombarname=("bottom1")
+
+for i in "${!monitors[@]}"; do
+	# used to set bar and workspace.
+	polybar="$polybarpath" monitor="${monitors[$i]}" index="$i" \
+	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
+done
+
+# start eww daemon
+#eww daemon &
+#
+#sleep 1
+#index=0
+#sizes=( $(leftwm-state -q -n -t $SCRIPTPATH/sizes.liquid | sed -r '/^\s*$/d' ) )
+#for size in "${sizes[@]}"
+#do
+#    eww open bar$index
+#  let index=index+1
+#done
