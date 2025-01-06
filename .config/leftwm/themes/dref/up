@@ -1,38 +1,39 @@
-#!/bin/sh
-export MAINPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-export THEME="rose-pine"
-export HWMON="$(fd . /sys/devices/platform | rg temp1_input)"
+#!/bin/bash
+
+export MAINPATH
+export HWMON
+export POLYBAR="$DOTFILES"/.config/polybar
+# Sets -w of leftwm
+export index=0
+
+MAINPATH="$(
+	cd "$(dirname "$0")"
+	pwd -P
+)" || exit 1
+
+# Set HWMON var for polybat temperature module.
+if [ -x "$(command -v fd && command -v rg)" ]; then
+	HWMON="$(fd . /sys/devices/platform | rg -m 1 temp1_input)"
+fi
 
 # Down the last running theme
 if [ -f "/tmp/leftwm-theme-down" ]; then
-    /tmp/leftwm-theme-down
-    rm /tmp/leftwm-theme-down
+	/tmp/leftwm-theme-down
+	rm /tmp/leftwm-theme-down
 fi
 ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
 
 # Set the theme.toml config
 leftwm command "LoadTheme $MAINPATH/theme.ron"
 
-monitors=($(polybar -m | sed 's/:.*//'))
-polybarpath="$DOTFILES"/.config/polybar
-polybarcfg="$DOTFILES/.config/polybar/polybar.ini"
-barname=("main0" "main1")
-bottombarname=("bottom1")
+# Wallpapper
+if [ -x "$(command -v feh)" ]; then
+	feh --bg-fill "$MAINPATH"/background.jpg
+fi
 
-for i in "${!monitors[@]}"; do
-	# used to set bar and workspace.
-	polybar="$polybarpath" monitor="${monitors[$i]}" index="$i" \
-	polybar -c $polybarcfg "${barname[$i]}" &2> /dev/null
+for m in $(polybar -m | sed 's/:.*//'); do
+	MONITOR="$m" polybar -c "$POLYBAR/polybar.ini" main"$index"
+	((index += 1))
 done
 
-# start eww daemon
-#eww daemon &
-#
-#sleep 1
-#index=0
-#sizes=( $(leftwm-state -q -n -t $SCRIPTPATH/sizes.liquid | sed -r '/^\s*$/d' ) )
-#for size in "${sizes[@]}"
-#do
-#    eww open bar$index
-#  let index=index+1
-#done
+export MONITOR

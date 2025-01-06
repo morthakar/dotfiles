@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export DOTFILES:/home/free/dotfiles
+SETUVAR --export DOTFILES:/home/morthakar/dotfiles
 SETUVAR --export EDITOR:nvim
 SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dheight\x2040\x25\x20\x2d\x2dlayout\x3dreverse\x20\x2d\x2dborder
 SETUVAR --export LANG:pt_BR\x2eUTF\x2d8

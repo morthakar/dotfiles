@@ -30,12 +30,9 @@ mkdir -p "$HOME"/.local/share/keyrings
 xset r rate 200 50
 
 # Numlock on at boot
-if [ -x numlockx ]; then
+if [ -x "$(command -v numlockx)" ]; then
 	numlockx &
 fi
-
-# Wallpapper Manager
-"$HOME"/.fehbg &
 
 # Start WM
 exec leftwm

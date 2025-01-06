@@ -4,7 +4,7 @@
 border_width:  2,
 default_border_color: "#524f67",
 floating_border_color: "#403d52",
-focused_border_color: "#cecacd",
-margin: 1,
-workspace_margin: 6,
+focused_border_color: "#cc241d",
+margin: 5,
+workspace_margin: 10,
 )
