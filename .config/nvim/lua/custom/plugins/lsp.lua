@@ -53,7 +53,7 @@ return {
           ["rust-analyzer"] = {},
         },
       },
-      zls = { cmd = { "/home/free/.local/repos/zls/zig-out/bin/zls" } },
+      zls = {},
       gopls = {
         {
           settings = {
