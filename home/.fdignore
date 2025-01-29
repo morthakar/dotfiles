@@ -1,7 +1,0 @@
-*.git
-*.gitignore
-Brave*/
-/.cache
-/.cargo
-/.local
-/go/

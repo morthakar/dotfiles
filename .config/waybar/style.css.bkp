@@ -1,0 +1,118 @@
+@define-color rosewater #f4dbd6;
+@define-color flamingo #f0c6c6;
+@define-color pink #f5bde6;
+@define-color mauve #c6a0f6;
+@define-color red #ed8796;
+@define-color maroon #ee99a0;
+@define-color peach #f5a97f;
+@define-color yellow #eed49f;
+@define-color green #a6da95;
+@define-color teal #8bd5ca;
+@define-color sky #91d7e3;
+@define-color sapphire #7dc4e4;
+@define-color blue #8aadf4;
+@define-color lavender #b7bdf8;
+@define-color text #cad3f5;
+@define-color subtext1 #b8c0e0;
+@define-color subtext0 #a5adcb;
+@define-color overlay2 #939ab7;
+@define-color overlay1 #8087a2;
+@define-color overlay0 #6e738d;
+@define-color surface2 #5b6078;
+@define-color surface1 #494d64;
+@define-color surface0 #363a4f;
+@define-color base #24273a;
+@define-color mantle #1e2030;
+@define-color crust #181926;
+
+#waybar {
+  font-family: 'FiraCode NerdFont', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: @text;
+  background-color: @crust;
+}
+
+/* Update the color gradient for active workspace */
+#workspaces button.active {
+  border-radius: 3px;
+  color: @blue;
+  border: 2px solid transparent; /* We use a transparent border initially */
+}
+
+.modules-right *{
+	margin-right: 10px;
+}
+
+/* Example for other elements (modify as per your needs) */
+#mode, #clock, #disk, #cpu, #memory, #network, #pulseaudio, #temperature {
+  margin: 4px 2px;
+  padding: 5px;
+  border: 3px solid transparent; /* Transparent border */
+  background-color: @crust;
+  color: @text;
+  border-radius: 5px;
+  min-width: 20px;
+  background-color: @mantle;
+}
+
+/* Other example customization */
+#tray {
+  padding: 5px;
+  border-radius: 4px;
+  background-color: @base02;
+  border: 2px solid transparent;
+  background-color: @mantle
+}
+
+#pulseaudio.muted {
+  color: @mantle;
+}
+
+#pulseaudio.bluetooth {
+  color: @mantle;
+}
+
+#disk {
+  color: @text;
+  background-color: @mantle;
+}
+
+#cpu {
+  color: @text;
+  background-color: @mantle;
+}
+
+#memory {
+  color: @text;
+}
+
+#temperature {
+  color: @text;
+}
+
+#clock {
+  margin-left: 0px;
+  margin-right: 4px;
+  color: @text;
+}
+
+/* Critical temperature styling */
+#temperature.critical {
+  border-color: @red;
+  background-color: #cc0a0a;
+  color: @text;
+}
+
+#window {
+  font-size: 0.9em;
+  font-weight: 400;
+  font-family: sans-serif;
+}
+
+#powermenu {
+	font-size: 18px;
+}
+
+
+

@@ -1,23 +1,17 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 34, // Waybar height (to be removed for auto height)
+    // "height": 34, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
+    "mode": "dock",
+    "reload_style_on_change": true,
+    "gtk-layer-shell": true,
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": ["hyprland/workspaces","custom/right","custom/paddw","hyprland/window"],
     "modules-center": ["group/hardware"],
-    "modules-right": ["pulseaudio","clock", "tray", "group/powermenu"],
+    "modules-right": ["custom/updates","pulseaudio","clock", "tray", "group/powermenu"],
 
-//  __  __           _       _
-// |  \/  | ___   __| |_   _| | ___  ___
-// | |\/| |/ _ \ / _` | | | | |/ _ \/ __|
-// | |  | | (_) | (_| | |_| | |  __/\__ \
-// |_|  |_|\___/ \__,_|\__,_|_|\___||___/
-//
-//
-
-  // Workspaces
   "hyprland/workspaces": {
     "on-scroll-up": "hyprctl dispatch workspace r-1",
     "on-scroll-down": "hyprctl dispatch workspace r+1",
@@ -30,17 +24,12 @@
       "active": "",
       "default": ""
     },
-    "persistent-workspaces": {
-    }
   },
 
   "hyprland/window": {
     "rewrite": {
-      "(.*) - Brave": "$1",
-      "(.*) - Chromium": "$1",
-      "(.*) - Brave Search": "$1",
-      "(.*) - Outlook": "$1",
-      "(.*) Microsoft Teams": "$1"
+      "": 
+        "<span foreground='#89b4fa'> </span> Hyprland",
     },
     "separate-outputs": true
   },
@@ -60,12 +49,20 @@
   "cpu": {
     "format": "{icon0} {usage}%",
     "format-icons": ["<span color='#69ff94'> </span>"],
-    "on-click": "~/.config/ml4w/settings/system-monitor.sh"
   },
 
   "memory": {
-    "format": "  {used:0.1f}G",
-    "on-click": "~/.config/ml4w/settings/system-monitor.sh"
+    "states": {
+      "warning": 75,
+      "critical": 90
+    },
+    "format": "  {used:0.1f}GB",
+    "format-critical": "󰀦 {percentage}%",
+    "tooltip": true,
+    "tooltip-format": "Memory Used: {used:0.1f} GB / {total:0.1f} GB",
+    "interval": 5,
+    "min-length": 10,
+    "max-length": 10,
   },
 
  "disk": {
@@ -81,14 +78,9 @@
     "format": " {temperatureC}°C"
 },
 
-  "hyprland/language": {
-    "format": "Lang: {}",
-    "keyboard-name": "at-translated-set-2-keyboard"
-},
-
   "group/hardware": {
     "orientation": "horizontal",
-    "modules": ["disk", "cpu", "memory","temperature"]
+    "modules": ["custom/paddc","custom/left","temperature","custom/left","memory","custom/left", "cpu"]
   },
 
     // Arch Updates
@@ -96,8 +88,8 @@
     "format": "  {}",
     "escape": false,
     // "return-type": "json",
-    "exec": "~/dotfiles/scripts/goarchupdate",
-    "interval": 3600,
+    "exec": "~/dotfiles/scripts/archtools update -an",
+    "interval": 360000,
     "tooltip-format": "Available Updates",
     "on-click": "dunstctl history-pop 755",
     "on-click-right": "dunstctl close 755"
@@ -111,7 +103,6 @@
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
   },
 
-  // Power Menu
 "group/powermenu": {
     "orientation": "horizontal",
     "drawer": {
@@ -119,9 +110,9 @@
       "children-class": "powermenu",
       "transition-left-to-right": false
     },
-    "modules": ["custom/poweroff", "custom/reboot"]
+    "modules": ["custom/power", "custom/reboot"]
   },
-    "custom/poweroff": {
+    "custom/power": {
     "format": "⏻",
     "on-click": "systemctl poweroff",
     "tooltip-format": "Shutdown"
@@ -132,33 +123,18 @@
     "tooltip-format": "Reboot"
   },
 
-    // Keyboard State
-  "keyboard-state": {
-    "numlock": true,
-    "capslock": true,
-    "format": "{name} {icon}",
-    "format-icons": {
-      "locked": "",
-      "unlocked": ""
-    }
-  },
-
-  // Network
-  "network": {
+ "network": {
+    "interface": "enp4s0",
     "format": "{ifname}",
-    "format-wifi": "   {signalStrength}%",
-    "format-ethernet": "  {ifname}",
-    "format-disconnected": "Disconnected",
-    "tooltip-format": " {ifname} via {gwaddri}",
-    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "interval": 1,
+    "format-ethernet": "{bandwidthTotalBytes} {bandwidthDownBytes}󰊗",
+    "format-disconnected": "", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+    "tooltip-format-ethernet": "{ifname} {ipaddr} ",
     "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50,
-    "on-click": "~/.config/ml4w/settings/networkmanager.sh",
-    "on-click-right": "~/.config/ml4w/scripts/nm-applet.sh toggle",
-  },
+    "max-length": 50
+},
 
-  // Pulseaudio
   "pulseaudio": {
     // "scroll-step": 1, // %, can be a float
     "format": "{icon}  {volume}%",
@@ -178,4 +154,41 @@
     },
     "on-click": "pavucontrol"
   },
+	  "custom/paddw": {
+    "format": " ",
+    "tooltip": false
+  },
+
+  "custom/paddc": {
+    "format": " ",
+    "tooltip": false
+  },
+
+  // == Left Arrows ==
+
+  "custom/left": {
+    "format": "",
+    "tooltip": false
+	},
+
+  // == Right Arrows ==
+
+  "custom/right": {
+    "format": "",
+    "tooltip": false
+	},
+
+  // == Left Inverse ==
+
+  "custom/leftin": {
+    "format": "",
+    "tooltip": false
+  },
+
+  // == Right Inverse ==
+
+  "custom/rightin": {
+    "format": "",
+    "tooltip": false
+  }
 }
