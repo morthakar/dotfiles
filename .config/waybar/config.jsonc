@@ -1,194 +1,161 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    // "height": 34, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    "mode": "dock",
-    "reload_style_on_change": true,
-    "gtk-layer-shell": true,
-    // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces","custom/right","custom/paddw","hyprland/window"],
-    "modules-center": ["group/hardware"],
-    "modules-right": ["custom/updates","pulseaudio","clock", "tray", "group/powermenu"],
-
-  "hyprland/workspaces": {
-    "on-scroll-up": "hyprctl dispatch workspace r-1",
-    "on-scroll-down": "hyprctl dispatch workspace r+1",
-    "on-click": "activate",
-    "active-only": false,
-    "all-outputs": true,
-    "format": "{name} {icon}",
-    "format-icons": {
-      "urgent": "-",
-      "active": "",
-      "default": ""
-    },
-  },
-
-  "hyprland/window": {
-    "rewrite": {
-      "": 
-        "<span foreground='#89b4fa'> </span> Hyprland",
-    },
-    "separate-outputs": true
-  },
-
-  "tray": {
-    "icon-size": 16,
-    "spacing": 10
-  },
-
-  "clock": {
-    "format": "{:L%A, %d/%m/%y %H:%M}",
-    "on-click": "ags toggle calendar",
-    "timezone": "America/Sao_Paulo",
-    "tooltip": false
-  },
-
-  "cpu": {
-    "format": "{icon0} {usage}%",
-    "format-icons": ["<span color='#69ff94'> </span>"],
-  },
-
-  "memory": {
-    "states": {
-      "warning": 75,
-      "critical": 90
-    },
-    "format": "  {used:0.1f}GB",
-    "format-critical": "󰀦 {percentage}%",
-    "tooltip": true,
-    "tooltip-format": "Memory Used: {used:0.1f} GB / {total:0.1f} GB",
-    "interval": 5,
-    "min-length": 10,
-    "max-length": 10,
-  },
-
- "disk": {
-	"interval": 30,
-	"format": "󰋊 {percentage_used}%/{specific_total:0.1f}GB",
-	"unit": "GB"
-},
-	 "temperature": {
-    "thermal-zone": 2,
-    //"hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-    "format-critical": " {temperatureC}°C",
-    "format": " {temperatureC}°C"
-},
-
-  "group/hardware": {
-    "orientation": "horizontal",
-    "modules": ["custom/paddc","custom/left","temperature","custom/left","memory","custom/left", "cpu"]
-  },
-
-    // Arch Updates
-  "custom/updates": {
-    "format": "  {}",
-    "escape": false,
-    // "return-type": "json",
-    "exec": "~/dotfiles/scripts/archtools update -an",
-    "interval": 360000,
-    "tooltip-format": "Available Updates",
-    "on-click": "dunstctl history-pop 755",
-    "on-click-right": "dunstctl close 755"
-  },
-
-  // Rofi Application Launcher
-  "custom/appmenuicon": {
-    "format": "",
-    "on-click": "sleep 0.2;rofi -show drun -replace",
-    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
-    "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
-  },
-
-"group/powermenu": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 300,
-      "children-class": "powermenu",
-      "transition-left-to-right": false
-    },
-    "modules": ["custom/power", "custom/reboot"]
-  },
-    "custom/power": {
-    "format": "⏻",
-    "on-click": "systemctl poweroff",
-    "tooltip-format": "Shutdown"
-  },
-  "custom/reboot": {
-    "format": "⏼",
-    "on-click": "systemctl reboot",
-    "tooltip-format": "Reboot"
-  },
-
- "network": {
-    "interface": "enp4s0",
-    "format": "{ifname}",
-    "interval": 1,
-    "format-ethernet": "{bandwidthTotalBytes} {bandwidthDownBytes}󰊗",
-    "format-disconnected": "", //An empty format will hide the module.
-    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-    "tooltip-format-ethernet": "{ifname} {ipaddr} ",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50
-},
-
-  "pulseaudio": {
-    // "scroll-step": 1, // %, can be a float
-    "format": "{icon}  {volume}%",
-    "format-bluetooth": "{volume}% {icon} {format_source}",
-    "format-bluetooth-muted": " {icon} {format_source}",
-    "format-muted": " {format_source}",
-    "format-source": "{volume}% ",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": " ",
-      "hands-free": " ",
-      "headset": " ",
-      "phone": " ",
-      "portable": " ",
-      "car": " ",
-      "default": ["", "", ""]
-    },
-    "on-click": "pavucontrol"
-  },
-	  "custom/paddw": {
-    "format": " ",
-    "tooltip": false
-  },
-
-  "custom/paddc": {
-    "format": " ",
-    "tooltip": false
-  },
-
-  // == Left Arrows ==
-
-  "custom/left": {
-    "format": "",
-    "tooltip": false
+	"layer": "top",
+	"position": "top",
+	"spacing": 4,
+	"mode": "dock",
+	"reload_style_on_change": true,
+	"gtk-layer-shell": true,
+	"modules-left": [
+		"hyprland/workspaces",
+		"hyprland/window"
+	],
+	"modules-center": [
+		"group/hardware"
+	],
+	"modules-right": [
+		"custom/updates",
+		"pulseaudio",
+		"clock",
+		"tray",
+		"custom/power"
+	],
+	"hyprland/workspaces": {
+		"on-scroll-up": "hyprctl dispatch workspace r-1",
+		"on-scroll-down": "hyprctl dispatch workspace r+1",
+		"on-click": "activate",
+		"active-only": false,
+		"all-outputs": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"urgent": "-",
+			"active": "",
+			"default": ""
+		}
 	},
-
-  // == Right Arrows ==
-
-  "custom/right": {
-    "format": "",
-    "tooltip": false
+	"hyprland/window": {
+		"rewrite": {
+			"": "<span foreground='#89b4fa'> </span> Hyprland"
+		},
+		"separate-outputs": true
 	},
-
-  // == Left Inverse ==
-
-  "custom/leftin": {
-    "format": "",
-    "tooltip": false
-  },
-
-  // == Right Inverse ==
-
-  "custom/rightin": {
-    "format": "",
-    "tooltip": false
-  }
+	"tray": {
+		"icon-size": 16,
+		"spacing": 10
+	},
+	"clock": {
+		"format": "{:L%A, %d/%m/%y %H:%M}",
+		"on-click": "ags toggle calendar",
+		"timezone": "America/Sao_Paulo",
+		"tooltip": false
+	},
+	"group/hardware": {
+		"orientation": "horizontal",
+		"modules": [
+			"network",
+			"temperature",
+			"memory",
+			"custom/appmenu",
+			"cpu",
+			"disk"
+		]
+	},
+	"network": {
+		"interface": "enp4s0",
+		"interval": 1,
+		"format": "{ifname}",
+		"format-icons": [
+			"<span color='#12e00b'> </span>"
+		],
+		"format-ethernet": "{icon} {bandwidthTotalBytes}",
+		"format-disconnected": "󰌙 ",
+		"tooltip-format": "{ifname} via {gwaddr}",
+		"tooltip-format-ethernet": "{ifname} {ipaddr}",
+		"tooltip-format-disconnected": "Disconnected",
+		"max-length": 10,
+		"min-length": 10
+	},
+	"temperature": {
+		"interval": 1,
+		"thermal-zone": 2,
+		//"hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+		"critical-threshold": 80,
+		"format-critical": "<span color='#d4061e'></span> {temperatureC}°C",
+		"format": "{icon} {temperatureC}°C",
+		"format-icons": [
+			"<span color='#739ede'></span>"
+		]
+	},
+	"cpu": {
+		"format": "{icon} {usage}%",
+		"format-icons": [
+			"<span color='#4125fa'> </span>"
+		]
+	},
+	"memory": {
+		"states": {
+			"warning": 75,
+			"critical": 90
+		},
+		"format": "{icon} {used:0.1f}GB",
+		"format-icons": [
+			"<span color='#c708b4'> </span>"
+		],
+		"format-critical": "󰀦 {percentage}%",
+		"tooltip": true,
+		"tooltip-format": "Memory Used: {used:0.1f} GB / {total:0.1f} GB",
+		"interval": 5,
+		"min-length": 10,
+		"max-length": 10
+	},
+	"disk": {
+		"interval": 30,
+		"format": "<span color='#e0480b'>󰋊</span> {specific_used:0.1f}/{specific_total:0.1f} GB ({percentage_used}%)",
+		"unit": "GB"
+	},
+	"custom/updates": {
+		"format": "{} {icon}",
+		"format-icons": [
+			"<span color='#e0480b'> </span>"
+		],
+		"escape": false,
+		"exec": "~/dotfiles/scripts/archtools update -cn",
+		"exec-on-event": false,
+		"interval": 43200,
+		"tooltip": false,
+		"on-click": "dunstctl history-pop 755",
+		"on-click-right": "dunstctl close 755"
+	},
+	// Rofi Application Launcher
+	"custom/appmenu": {
+		"format": "",
+		"on-click": "sleep 0.2;rofi -show drun -theme ~/.config/rofi/styles/style_2.rasi"
+	},
+	"custom/power": {
+		"format": "⏻",
+		"on-click": "~/.config/rofi/powermenu.sh",
+		"tooltip-format": "Shutdown"
+	},
+	"pulseaudio": {
+		// "scroll-step": 1, // %, can be a float
+		"format": "{icon}  {volume}%",
+		"format-bluetooth": "{volume}% {icon} {format_source}",
+		"format-bluetooth-muted": " {icon} {format_source}",
+		"format-muted": " {format_source}",
+		"format-source": "{volume}% ",
+		"format-source-muted": "",
+		"format-icons": {
+			"headphone": " ",
+			"hands-free": " ",
+			"headset": " ",
+			"phone": " ",
+			"portable": " ",
+			"car": " ",
+			"default": [
+				"",
+				"",
+				""
+			]
+		},
+		"on-click": "pavucontrol"
+	}
 }
