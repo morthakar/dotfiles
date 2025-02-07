@@ -1,39 +1,63 @@
 #!/bin/bash
 
 export MAINPATH
-export HWMON
-export POLYBAR="$DOTFILES"/.config/polybar
-# Sets -w of leftwm
-export index=0
+export HWMON   # used in polybar
+export MONITOR # used in polybar
+export INDEX=0 # sets leftwm-state -w, for polybar workspace module
 
 MAINPATH="$(
 	cd "$(dirname "$0")"
 	pwd -P
 )" || exit 1
 
-# Set HWMON var for polybat temperature module.
-if [ -x "$(command -v fd && command -v rg)" ]; then
-	HWMON="$(fd . /sys/devices/platform | rg -m 1 temp1_input)"
-fi
+get_hwmon_path() {
+	HWMON="$(find /sys/devices/platform | grep -m 1 temp1_input)"
+}
 
-# Down the last running theme
-if [ -f "/tmp/leftwm-theme-down" ]; then
-	/tmp/leftwm-theme-down
-	rm /tmp/leftwm-theme-down
-fi
-ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
+set_keyboard_rate() {
+	xset r rate 200 50 &
+}
 
-# Set the theme.toml config
-leftwm command "LoadTheme $MAINPATH/theme.ron"
+unload_theme() {
+	if [ -f "/tmp/leftwm-theme-down" ]; then
+		/tmp/leftwm-theme-down
+		rm /tmp/leftwm-theme-down
+	fi
+	ln -s "$MAINPATH"/down /tmp/leftwm-theme-down
+}
 
-# Wallpapper
-if [ -x "$(command -v feh)" ]; then
-	feh --bg-fill "$MAINPATH"/background.jpg
-fi
+load_theme() {
+	unload_theme
 
-for m in $(polybar -m | sed 's/:.*//'); do
-	MONITOR="$m" polybar -c "$POLYBAR/polybar.ini" main"$index"
-	((index += 1))
-done
+	# Set the theme.toml config
+	leftwm command "LoadTheme $MAINPATH/theme.ron" &
+}
 
-export MONITOR
+set_wallpaper() {
+	if [ -x "$(command -v feh)" ]; then
+		feh --bg-fill "$MAINPATH"/background.jpg &
+	fi
+}
+
+compositor_init() {
+	if [ -x "$(command -v picom)" ]; then
+		pkill picom
+		picom &
+	fi
+}
+
+polybar_init() {
+	pkill polybar
+	cfg="$HOME"/.config/polybar/polybar.ini
+	for m in $(polybar -m | sed 's/:.*//'); do
+		MONITOR="$m" polybar -c "$cfg" main"$INDEX" &
+		((INDEX += 1))
+	done
+}
+
+set_keyboard_rate
+compositor_init
+set_wallpaper
+get_hwmon_path
+load_theme
+polybar_init

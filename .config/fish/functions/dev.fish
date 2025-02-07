@@ -1,9 +1,22 @@
 function dev --wraps='tmux new-session' --description 'Creates or switches to a tmux session'
-	set -g dir $(fd . "$HOME/code" -t d -d 2 | fzf)
-	set -g session $(basename "$dir" | tr . _)
+
+	switch $argv
+	case "."
+		set -f dir $(pwd)
+	case ""
+		set -f dir $(fd . "$HOME/code" -t d -d 2 | fzf)
+	case "*"
+		set -f dir $(fd -t d -H "$argv"  "$HOME" | fzf)
+	end
+
+	if not test -d "$dir"
+		return 1
+	end
+
+	set -f session $(basename "$dir" | tr . _)
 
 	tmux has-session -t "$session" > /dev/null 2>&1
-	set -g exit_code "$status"
+	set -f exit_code "$status"
 
 	if test -n "$TMUX"
 		if test "$exit_code" -eq 0
@@ -20,5 +33,4 @@ function dev --wraps='tmux new-session' --description 'Creates or switches to a 
 		end
 	end
 end
-
 

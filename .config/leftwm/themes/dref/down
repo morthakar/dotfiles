@@ -1,9 +1,7 @@
 #!/bin/sh
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+#unset background
+feh --bg-scale "$MAINPATH"/down.jpg &
 
-#set background
-feh --bg-scale "$SCRIPTPATH"/down.jpg
-
-leftwm command "UnloadTheme"
+leftwm command "UnloadTheme" &
 
 pkill polybar

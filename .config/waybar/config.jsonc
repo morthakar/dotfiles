@@ -118,12 +118,13 @@
 			"<span color='#e0480b'> </span>"
 		],
 		"escape": false,
-		"exec": "~/dotfiles/scripts/archtools update -cn",
+		"exec": "~/dotfiles/scripts/archtools update -a 12 -cn",
 		"exec-on-event": false,
 		"interval": 43200,
 		"tooltip": false,
 		"on-click": "dunstctl history-pop 755",
-		"on-click-right": "dunstctl close 755"
+		"on-click-right": "dunstctl close 755",
+		"signal": 8
 	},
 	// Rofi Application Launcher
 	"custom/appmenu": {

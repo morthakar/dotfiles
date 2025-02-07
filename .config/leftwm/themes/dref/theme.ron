@@ -3,8 +3,8 @@
 (
 border_width:  2,
 default_border_color: "#524f67",
-floating_border_color: "#403d52",
-focused_border_color: "#cc241d",
+floating_border_color: "#0559f5",
+focused_border_color: "#b4befe",
 margin: 5,
 workspace_margin: 10,
 )

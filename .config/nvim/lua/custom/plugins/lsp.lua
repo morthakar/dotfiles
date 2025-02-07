@@ -15,6 +15,7 @@ return {
       callback = function(event)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf })
         vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = event.buf })
+        vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { buffer = event.buf })
         vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = event.buf })
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = event.buf })
         vim.keymap.set("n", "g[", vim.diagnostic.goto_next, { buffer = event.buf })

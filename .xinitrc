@@ -26,9 +26,6 @@ mkdir -p "$HOME"/.local/share/keyrings
 #xrandr --output HDMI-0 --primary --mode 1920x1080 --output DP-0 --mode 1600x900 --right-of HDMI-0
 #xrandr xrandr --output DP-0 --mode 1600x900 --pos 1920x0 --output HDMI-0 --mode 1920x1080 --pos 0x0
 
-# Set delay and rate for keyboard input
-xset r rate 200 50
-
 # Numlock on at boot
 if [ -x "$(command -v numlockx)" ]; then
 	numlockx &
