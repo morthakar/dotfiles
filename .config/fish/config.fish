@@ -13,7 +13,7 @@
 
 if status is-interactive
 	# Commands to run in interactive sessions can go here
-	bind \cf 'findfiles; commandline -f repaint'
+	bind \cf 'fuzzy-find; commandline -f repaint'
 end
 
 starship init fish | source

@@ -1,5 +1,3 @@
-function up --wraps='paru -Syu && polybar-msg cmd restart' --description 'alias up=paru'
-	begin
-		 archtools update -icnf
-	end
+function up --wraps='archtools update -u --log debug' --description 'upgrade all packages'
+	archtools update -u --log debug
 end

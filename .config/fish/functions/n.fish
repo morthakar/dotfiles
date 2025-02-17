@@ -1,3 +1,3 @@
 function n --wraps=nvim --description 'alias n=nvim'
-  nvim $argv; 
+	nvim $argv; 
 end

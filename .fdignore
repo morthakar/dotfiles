@@ -1,7 +1,12 @@
 *.git
 *.gitignore
 Brave*/
+Caido*/
 /.cache
 /.cargo
+/.icons
 /.local
+/.mozilla
+/.npm
+/.themes
 /go/

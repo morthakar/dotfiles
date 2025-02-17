@@ -1,109 +1,81 @@
-/* Modern and Enhanced Waybar Theme */
+@import "theme.css";
 
 * {
-    font-family: "JetBrains Mono Nerd Font";
-    font-size: 14px;
-    font-weight: bold;
-    min-height: 0;
+	font-family: "FiraCode Nerd Font";
+	font-size: 12px;
+	font-weight: bold;
+	border: none;
 }
 
+
 window#waybar {
-    background: rgba(15, 15, 15, 0.9);
-    color: #e0def4;
-    margin: 0px;
-    border-radius: 0px;
-    padding: 0px;
+	background: rgba(255,255,255,0);
+}
+
+.module {
+	color: @black;
+	background: @b;
+	border: 1px solid @f;
+	border-radius: 6px;
+	padding: 4px;
+	margin: 4 2 0 2;
 }
 
 tooltip {
-    background: #191724;
-    border: 1px solid #c4a7e7;
-    border-radius: 6px;
-    padding: 6px;
+	background: @a;
+	border: 1px solid @black;
 }
 
-/* Workspaces */
+tooltip label {
+	font-weight: normal;
+	color: @black;
+}
+
+#workspaces  {
+	color: @black;
+	background: @b;
+	padding: 0px;
+}
+
 #workspaces button {
-    background: transparent;
-    color: #f5e0dc;
-    border-radius: 4px;
-    padding: 0px 6px;
-    margin: 4px;
-    transition: all 0.2s ease-in-out;
+	color: @black;
+	transition: all 0.3s ease-in-out;
+	margin: 2;
 }
 
 #workspaces button.active {
-    background: #9399b2;
-    color: #11111b;
+	color: @text;
+	background: @d;
 }
 
 #workspaces button:hover {
-    background: #ebbcba;
-    color: #191724;
-}
-
-#workspaces {
-    background-color: #181825;
-    border-radius: 6px;
-    padding: 2px 2px;
-    margin: 1px;
-}
-
-/* Modules */
-#window,
-#network,
-#temperature,
-#memory,
-#custom-appmenu,
-#cpu,
-#disk,
-#custom-updates,
-#pulseaudio,
-#clock,
-#tray,
-#custom-power {
-    color: #f5e0dc;
-    background-color: #181825;
-    border-radius: 6px;
-    padding: 2px 10px;
-    margin: 4px;
-}
-
-#window {
-    border-radius: 6px;
-    font-weight: bold;
+	color: @text;
+	background: @d;
 }
 
 #custom-appmenu {
-    font-size: 16px;
-    padding: 2px 20px;
-    padding-left: 20px;
-    padding-right: 22px;
+    font-size: 20px;
+    padding: 0px 20px 0px 15px;
 }
 
-#clock {
-    font-weight: bold;
-    padding: 2px 14px;
-    border-radius: 8px;
-}
-
-#custom-power {
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 20px;
-    padding: 6px 12px;
-    padding-left: 10px;
-    padding-right: 12px;
-}
-
-#pulseaudio {
-    border-radius: 8px;
-    padding: 2px 12px;
+#custom-updates {
+	color: @text;
+	background: @d;
+	font-size: 16px;
+	border: 2px solid @d;
 }
 
 #tray {
     border-radius: 6px;
     padding: 2px 12px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
+#custom-power {
+    color: @text;
+    background: @d;
+    border-radius: 8px;
+    font-size: 18px;
+    padding: 0px 12px;
+    padding-right: 15px;
+}

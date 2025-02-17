@@ -1,0 +1,31 @@
+@define-color text       #f5e0dc;
+@define-color bg         rgba(19, 11, 36, 0.6);
+@define-color button-bg      #181825;
+
+@define-color active-bg       #9399b2;
+@define-color hover-bg        #313244;
+@define-color hover-fg        rgba(205, 214, 244, 0.75);
+
+
+/* Module Colors */
+
+@define-color temperature     #1e1e2e;
+
+/* State Colors */
+
+@define-color good            #0cf017;
+@define-color warning         #fae52d;
+@define-color critical        #ff0f0f;
+@define-color full            #9db1f5;
+@define-color charging        #cdd6f4;
+
+@define-color a #151517;
+@define-color b #2B67FF;
+@define-color c #2f377f;
+@define-color d #0187cb;
+@define-color e #01b5f7;
+@define-color et rgba(1, 181, 247, 0.75);
+@define-color f rgba(252, 1, 22, 0.70);
+@define-color g rgba(151, 0, 30, 0.4);
+@define-color h #472F5D;
+@define-color i #45406F;
