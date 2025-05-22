@@ -1,0 +1,52 @@
+$env
+config.nu
+config
+config nu
+n $nu.env-path
+nevim $nu.env-path
+nvim $nu.env-path
+$nu.config-path
+nvim $nu.config-path
+exit
+$env.DOTFILE
+$env.config-path
+$nu.config-path
+$nu.loginshell-path
+nvim $nu.loginshell-path
+$nu.is-interactive
+$nu.is-login
+dev .
+ls
+ls -l
+pm
+help alias
+scope aliases 
+nvim $nu.config-path
+exit
+scope aliases 
+n
+config nu
+exit
+scope aliases 
+n
+config nu
+n
+scope aliases 
+exit
+$nu.env-path
+nvim $nu.env-path
+exit
+nvim $nu.env-path
+exit
+config env 
+exit
+$env.EDITOR
+config nu
+exit
+config nu
+exit
+config nu
+exit
+pm
+config nu
+exit

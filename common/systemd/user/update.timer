@@ -1,0 +1,11 @@
+[Unit]
+Description=Check available updates with Archtools.
+
+[Timer]
+OnCalendar= *-*-* 00:00:00
+OnUnitActiveSec=12h
+Persistent=true
+AccuracySec=1us
+
+[Install]
+WantedBy=timers.target

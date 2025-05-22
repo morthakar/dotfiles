@@ -316,9 +316,9 @@
     default_icon = software-update-available-symbolic.symbolic
 
 [urgency_normal]
-    background = "#181926"
-    foreground = "#8aadf4"
-    frame_color = "#24273a"
+    background = "#e6e3e3"
+    foreground = "#181825"
+    frame_color = "#181825"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     default_icon = software-update-urgent-symbolic

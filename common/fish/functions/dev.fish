@@ -1,16 +1,14 @@
 function dev --wraps='tmux new-session' --description 'Creates or switches to a tmux session'
 
 	switch $argv
-	case "."
-		set -f dir $(pwd)
 	case ""
 		set -f dir $(fd . "$HOME/code" -t d -d 2 | fzf)
 	case "*"
-		set -f dir $(fd -t d -H "$argv"  "$HOME" | fzf)
+		set -f dir $(fd . "$argv" -t d -d 2 | fzf)
 	end
 
 	if not test -d "$dir"
-		return 1
+		set -f dir $(pwd)
 	end
 
 	set -f session $(basename "$dir" | tr . _)

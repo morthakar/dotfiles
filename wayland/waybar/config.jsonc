@@ -69,9 +69,9 @@
 		"interval": 1,
 		"format": "{ifname}",
 		"format-icons": [
-			"<span color='#12e00b'> </span>"
+			"<span color='#12e00b'></span>"
 		],
-		"format-ethernet": "{icon} {bandwidthTotalBytes}",
+		"format-ethernet": "{icon} {bandwidthDownBytes}",
 		"format-disconnected": "󰌙 ",
 		"tooltip-format": "{ifname} via {gwaddr}",
 		"tooltip-format-ethernet": "{ifname} {ipaddr}",
@@ -83,7 +83,7 @@
 		"interval": 1,
 		"thermal-zone": 2,
 		//"hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-		"critical-threshold": 80,
+		"critical-threshold": 70,
 		"format-critical": "<span color='#d4061e'></span> {temperatureC}°C",
 		"format": "{icon} {temperatureC}°C",
 		"format-icons": [
@@ -108,14 +108,13 @@
 		"format-critical": "󰀦 {percentage}%",
 		"tooltip": true,
 		"tooltip-format": "Memory Used: {used:0.1f} GB / {total:0.1f} GB",
-		"interval": 5,
-		"min-length": 10,
-		"max-length": 10
+		"interval": 5
 	},
 	"disk": {
 		"interval": 30,
-		"format": "<span color='#e0480b'>󰋊</span> {specific_used:0.1f}/{specific_total:0.1f} GB ({percentage_used}%)",
-		"unit": "GB"
+		"format": "<span color='#e0480b'>󰋊</span> {specific_used:0.1f}GB of {specific_total:0.1f}GB ({specific_free:0.1f}GB free)",
+		"unit": "GB",
+		"tooltip-format": "{specific_used:0.1f}GB ({percentage_used}%) of {specific_total:0.1f}GB ({specific_free:0.1f}GB available ({percentage_free}%)"
 	},
 	"custom/updates": {
 		"format": "{} {icon}",
@@ -123,12 +122,12 @@
 			"<span color='#ffffff'> </span>"
 		],
 		"escape": false,
-		"exec": "archtools update -a 12 -cn --log info",
+		"exec": "archtools update -cn --log info",
 		"exec-on-event": false,
-		"interval": 43200,
+		// "interval": 43200,
 		"tooltip": false,
-		"on-click": "archtools update -cn --log info",
-		"on-click-right": "archtools update -rcn --log info",
+		"on-click": "archtools update --waybar",
+		"on-click-right": "archtools update -r --waybar --log info",
 		"signal": 8
 	},
 	// Rofi Application Launcher
@@ -167,8 +166,9 @@
 	},
 	"custom/uptime": {
 		"format": "󰦖 {}",
-		"exec": "uptime -p | sed -e 's/up //g' | sed -e 's/ hours, /h:/g' | sed -e 's/ minutes/m/g'",
-		"interval": "60",
-		"tooltip": false
+		"exec": "uptime -p | sed -e 's/ hour, /h:/g' |sed -e 's/up //g' | sed -e 's/ hours, /h:/g' | sed -e 's/ minutes/m/g' | sed -e 's/ minute/m/g'",
+		"interval": 60,
+		"tooltip": true,
+		"tooltip-format": "Uptime {}"
 	}
 }

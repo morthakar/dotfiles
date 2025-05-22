@@ -2,11 +2,10 @@
 
 * {
 	font-family: "FiraCode Nerd Font";
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 	border: none;
 }
-
 
 window#waybar {
 	background: rgba(255,255,255,0);
@@ -17,8 +16,16 @@ window#waybar {
 	background: @b;
 	border: 1px solid @f;
 	border-radius: 6px;
+	margin: 5px 2px 0px 2px;
 	padding: 4px;
-	margin: 4 2 0 2;
+}
+
+.modules-left {
+	padding-left: 5px;
+}
+
+.modules-right {
+	padding-right: 5px;
 }
 
 tooltip {
@@ -40,7 +47,7 @@ tooltip label {
 #workspaces button {
 	color: @black;
 	transition: all 0.3s ease-in-out;
-	margin: 2;
+	margin: 2px;
 }
 
 #workspaces button.active {
@@ -53,29 +60,29 @@ tooltip label {
 	background: @d;
 }
 
+
 #custom-appmenu {
-    font-size: 20px;
-    padding: 0px 20px 0px 15px;
+    font-size: 18px;
+    padding: 0px 15px 0px 10px;
 }
 
 #custom-updates {
 	color: @text;
 	background: @d;
 	font-size: 16px;
-	border: 2px solid @d;
+	border: 1px solid @d;
 }
 
 #tray {
-    border-radius: 6px;
-    padding: 2px 12px;
-    font-size: 20px;
+	border-radius: 6px;
+	padding: 2px 12px;
 }
 
 #custom-power {
-    color: @text;
-    background: @d;
-    border-radius: 8px;
-    font-size: 18px;
-    padding: 0px 12px;
-    padding-right: 15px;
+	color: @text;
+	background: @d;
+	border: 1px solid @d;
+	font-size: 16px;
+	padding: 0px 12px;
+	padding-right: 15px;
 }
